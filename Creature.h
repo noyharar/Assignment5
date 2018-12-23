@@ -5,9 +5,15 @@
 class Creature
 {
 private:
+
     int attackPower;
     int protectPower;
     int creatureCost;
+
+public:
+
+    void attackCreature(Creature);
+    void creatureDetails();
 };
 
 

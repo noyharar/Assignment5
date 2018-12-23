@@ -3,6 +3,7 @@
 
 class Hero{
 private:
+
     char* heroName[31];
     int goldQty;//between 0-2500
     Creature creatureList[5];
@@ -10,10 +11,13 @@ private:
 
 public:
 
-
     Hero();
     ~Hero();
-
+    void buyCreatures();
+    void getMoney();
+    void attackOpponent(Hero);
+    void heroDetails();
+    void specialSkill();
 
 
 
