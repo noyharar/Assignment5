@@ -18,9 +18,6 @@ public:
     void attackOpponent(Hero);
     void heroDetails();
     void specialSkill();
-
-
-
 };
 
 #endif //ASSIGNMENT5_HERO_H
