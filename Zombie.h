@@ -4,13 +4,17 @@
 #include "Creature.h"
 
 class Zombie : public Creature {
+ private:
 
-public:
+
+ public:
     Zombie();
     ~Zombie();
-    int getPower();
-    int getDefence();
+    double getPower()const override;
+    int getDefense()const override;
     void specialSkill();
+    void Attack(Creature* attackedCreature)const override;
+
 };
 
 #endif //ASSIGNMENT5_ZOMBIE_H

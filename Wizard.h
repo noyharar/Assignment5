@@ -4,13 +4,16 @@
 #include "Creature.h"
 
 class Wizard : public Creature{
+ private:
 
-public :
+
+ public:
     Wizard();
     ~Wizard();
-    int getPower();
-    int getDefence();
+    double getPower()const override;
+    int getDefense()const override;
     void specialSkill();
+    void Attack(Creature* attackedCreature)const;
 };
 
 

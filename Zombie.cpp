@@ -1,24 +1,34 @@
+
 #include "Zombie.h"
 
-Zombie :: Zombie() {
+
+Zombie :: Zombie(){
     power = 2;
     defense = 5;
     cost = 50;
-  //  name = "Zombie";
+
+//  //  name = "Zombie";
 }
 
 Zombie :: ~Zombie() {}
 
-int Zombie :: getPower()
+double Zombie :: getPower()const
 {
     return power;
 }
 
-int Zombie :: getDefence()
+int Zombie :: getDefense()const
 {
     return defense;
 }
 
+
+
 void Zombie :: specialSkill(){
     defense *= 2;
+}
+
+void Zombie::Attack(Creature *attackedCreature) const
+{
+
 }

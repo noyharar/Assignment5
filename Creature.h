@@ -8,13 +8,14 @@ using namespace std;
 
 class Creature
 {
-protected:
-    int power;
+ protected:
+    double power;
     int defense;
     int cost;
+
   //  string name;
 
-public:
+ public:
 
 
     Creature();
@@ -22,9 +23,9 @@ public:
     virtual ~Creature();
     virtual void Attack(Creature* attackedCreature)const=0;
     void showDetails()const;
-    virtual int getPower()const=0;
+    virtual double getPower()const=0;
     virtual int getDefense()const=0;
-    virtual void specialSkill()const=0;
+//    virtual void specialSkill()const=0;
 
 
 

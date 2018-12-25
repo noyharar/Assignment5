@@ -10,12 +10,12 @@ Vampire :: Vampire(){
 
 Vampire::~Vampire(){}
 
-int Vampire :: getPower()
+double Vampire :: getPower()
 {
     return power;
 }
 
-int Vampire :: getDefence()
+int Vampire :: getDefense()
 {
     return defense;
 }

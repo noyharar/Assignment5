@@ -9,12 +9,17 @@ Black_Dragon :: Black_Dragon() {
 
 Black_Dragon :: ~Black_Dragon() = default;
 
-int Black_Dragon :: getPower()
+double Black_Dragon :: getPower()
 {
     return power;
 }
 
-int Black_Dragon :: getDefence()
+int Black_Dragon :: getDefense()
 {
     return defense;
 }
+
+//void Attack(Creature* attackedCreature)
+//{
+//
+//}

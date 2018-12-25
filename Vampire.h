@@ -9,8 +9,8 @@ class Vampire : public Creature{
 public:
     Vampire();
     ~Vampire();
-    int getPower();
-    int getDefence();
+    double getPower();
+    int getDefense();
 
 };
 
