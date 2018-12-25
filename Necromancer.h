@@ -2,6 +2,8 @@
 #define ASSIGNMENT5_NECROMANCER_H
 
 
+#include "Hero.h"
+
 class Necromancer : public Hero{
 
 };

@@ -19,12 +19,12 @@ public:
 
     Creature();
   //  Creature(string,int,int,int);
-    ~Creature();
-    virtual void Attack(Creature* attackedCreature)const;
+    virtual ~Creature();
+    virtual void Attack(Creature* attackedCreature)const=0;
     void showDetails()const;
-    virtual int getPower() = 0;
-    virtual int getDefense()= 0;
-    virtual void specialSkill();
+    virtual int getPower()const=0;
+    virtual int getDefense()const=0;
+    virtual void specialSkill()const=0;
 
 
 

@@ -4,9 +4,11 @@
 
 Vampire :: Vampire(){
     power = 4;
-    defence = 4;
+    defense = 4;
     cost = 80;
 }
+
+Vampire::~Vampire(){}
 
 int Vampire :: getPower()
 {
@@ -15,5 +17,5 @@ int Vampire :: getPower()
 
 int Vampire :: getDefence()
 {
-    return defence;
+    return defense;
 }

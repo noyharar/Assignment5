@@ -5,6 +5,7 @@
 #ifndef ASSIGNMENT5_THIEF_H
 #define ASSIGNMENT5_THIEF_H
 
+#include "Hero.h"
 
 class Thief : public Hero{
 

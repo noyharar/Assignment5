@@ -1,6 +1,7 @@
 #ifndef ASSIGNMENT5_WIZARD_H
 #define ASSIGNMENT5_WIZARD_H
 
+#include "Creature.h"
 
 class Wizard : public Creature{
 

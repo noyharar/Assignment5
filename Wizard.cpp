@@ -2,7 +2,7 @@
 #include "Wizard.h"
 Wizard :: Wizard(){
     power = 8;
-    defence = 2;
+    defense = 2;
     cost = 150;
 }
 Wizard :: ~Wizard(){}
@@ -14,5 +14,5 @@ int Wizard :: getPower()
 
 int Wizard :: getDefence()
 {
-    return defence;
+    return defense;
 }

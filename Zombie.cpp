@@ -2,7 +2,7 @@
 
 Zombie :: Zombie() {
     power = 2;
-    defence = 5;
+    defense = 5;
     cost = 50;
   //  name = "Zombie";
 }
@@ -16,9 +16,9 @@ int Zombie :: getPower()
 
 int Zombie :: getDefence()
 {
-    return defence;
+    return defense;
 }
 
 void Zombie :: specialSkill(){
-    defence *= 2;
+    defense *= 2;
 }

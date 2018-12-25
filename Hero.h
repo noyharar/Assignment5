@@ -1,12 +1,13 @@
 #ifndef ASSIGNMENT5_HERO_H
 #define ASSIGNMENT5_HERO_H
 
+#include "Creature.h"
 class Hero{
 private:
 
     char* heroName[31];
     int goldQty;//between 0-2500
-    Creature creatureList[5];
+//    Creature creatureList[5];
 
 public:
 
