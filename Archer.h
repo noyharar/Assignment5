@@ -4,7 +4,12 @@
 
 
 class Archer : public Creature{
-
+public:
+    Archer();
+    ~Archer();
+    int getPower();
+    int getDefence();
+    void specialSkill();
 };
 
 

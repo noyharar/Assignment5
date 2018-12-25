@@ -8,7 +8,6 @@ private:
     int goldQty;//between 0-2500
     Creature creatureList[5];
 
-
 public:
 
     Hero();

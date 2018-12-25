@@ -1,12 +1,14 @@
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
+#include "Creature.h"
+#include "Zombie.h"
 
 using namespace std;
 
 int main() {
     int attackMenu, choiceNum, buyMenu;
-
+  
     while (1) {
         // print menu
         cout << "What is your next step in the path to victory?\n";

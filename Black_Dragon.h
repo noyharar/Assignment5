@@ -5,6 +5,11 @@
 
 class Black_Dragon : public Creature{
 
+public:
+    Black_Dragon();
+    ~Black_Dragon();
+    int getPower();
+    int getDefence();
 };
 
 
