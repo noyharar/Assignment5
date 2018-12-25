@@ -4,12 +4,39 @@
 #include "Creature.h"
 #include "Zombie.h"
 #include "Wizard.h"
+#include "Hero.h"
+#include "Warrior.h"
+#include "Thief.h"
+#include "Necromancer.h"
 //#include "Black_Dragon.h"
 
 using namespace std;
 
-int main() {
+//void getUserNames()
+//{
+//
+//}
+
+
+int main(int argc, char* argsv[]){
     int attackMenu, choiceNum, buyMenu;
+//    getUserNames();
+    char *name = "Gal";
+    char *name2 = "thief";
+    Warrior gal(name);
+
+    gal.heroDetails();
+    gal.increaseGold(500);
+    gal.heroDetails();
+    gal.decreaseGold(1200);
+    gal.heroDetails();
+//    gal.specialSkill();
+
+    Thief myThief(name2);
+    myThief.heroDetails();
+    myThief.specialSkill(gal);
+    myThief.heroDetails();
+    gal.heroDetails();
 
 
 
