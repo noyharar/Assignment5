@@ -23,8 +23,12 @@ class Creature
     virtual double getPower()const=0;
     virtual int getDefense()const=0;
 //    virtual void specialSkill()const=0;
-
-
-
 };
+
+
+
+
+
+
+
 #endif //Creature_H

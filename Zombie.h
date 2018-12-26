@@ -4,8 +4,6 @@
 #include "Creature.h"
 
 class Zombie : public Creature {
- private:
-
 
  public:
     Zombie();

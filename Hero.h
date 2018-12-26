@@ -10,21 +10,38 @@
 
 class CreatureData;
 class Hero{
-public:
+protected:
     char* heroName;
     int goldQty;//between 0-2500
     CreatureData* creatureList;
+    string type;
 
 
 public:
     Hero();
     ~Hero();
-  //  virtual string getType()=0;
-    void buyCreatures();
+    virtual string getType() const =0;
     void getMoney();
    // void attackOpponent(Hero);
     void heroDetails();
     void specialSkill();
+    bool legalName(char* name);
+   // void heroDetails();
+    int getGold()const;
+    void increaseGold(int amount);
+    void decreaseGold(int amount);
+    Hero& getHero();
+
+
+    //    virtual void buyCreatures()=0;
+    char* getName()const;
+//    virtual void attackOpponent(/*Hero h1*/)=0;//How do i get a Hero Type variable
+    virtual string printCreatures()const=0;
+//    virtual void specialSkill()=0;
+//    virtual void AddCreatureToList(Creature *c1)=0;
+
+
+
 };
 class CreatureData{
 public:

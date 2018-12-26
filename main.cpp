@@ -5,14 +5,37 @@
 #include "Zombie.h"
 #include "Wizard.h"
 #include "Hero.h"
+#include "Warrior.h"
+#include "Thief.h"
+#include "Necromancer.h"
 //#include "Black_Dragon.h"
 
 using namespace std;
 
 int main() {
     int attackMenu, choiceNum, buyMenu;
-    Hero hero;
+    //    getUserNames();
+    string name = "Gal";
+    string name2 = "thief";
+   // Warrior gal(name);
+   // Warrior gal;
+    Thief noy;
+    Necromancer yossi;
+//    gal.heroDetails();
+//    gal.increaseGold(3000);
+//    gal.heroDetails();
+//    gal.decreaseGold(1200);
+//    gal.heroDetails();
+//    gal.specialSkill();
 
+//    Thief myThief(name2);
+//    myThief.heroDetails();
+//    myThief.specialSkill(gal);
+//    myThief.heroDetails();
+//    gal.heroDetails();
+
+
+    //  Hero hero;
 //    while (1) {
 //        // print menu
 //        cout << "What is your next step in the path to victory?\n";
