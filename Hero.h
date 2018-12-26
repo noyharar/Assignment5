@@ -9,46 +9,49 @@
 #include "Archer.h"
 
 class CreatureData;
+
 class Hero{
-protected:
+public:
     char* heroName;
     int goldQty;//between 0-2500
     CreatureData* creatureList;
     string type;
 
-
 public:
+
     Hero();
     ~Hero();
-    virtual string getType() const =0;
-    void getMoney();
-   // void attackOpponent(Hero);
+
+
+    virtual string getType() const=0;
     void heroDetails();
-    void specialSkill();
     bool legalName(char* name);
-   // void heroDetails();
     int getGold()const;
     void increaseGold(int amount);
     void decreaseGold(int amount);
+    string getTypeForPrint() const;
     Hero& getHero();
 
 
-    //    virtual void buyCreatures()=0;
+    void buyCreatures();
+    void helpToBuy(int index);
     char* getName()const;
+    void printCreatures()const;
+//     void attackOpponent(Hero);
 //    virtual void attackOpponent(/*Hero h1*/)=0;//How do i get a Hero Type variable
-    virtual string printCreatures()const=0;
-//    virtual void specialSkill()=0;
+//    virtual void specialSkill() const=0;
 //    virtual void AddCreatureToList(Creature *c1)=0;
-
-
-
 };
+
+//////////////////////////////////////////////
+
 class CreatureData{
 public:
     int numOfCreature;
     Creature* creature;
+    string creName;
     CreatureData();
-    CreatureData(Creature* cr, int num);
+    CreatureData(Creature*, string, int);
     ~CreatureData();
 };
 

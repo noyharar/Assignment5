@@ -2,9 +2,9 @@
 #include "Black_Dragon.h"
 
 Black_Dragon :: Black_Dragon() {
-    power = 5;
-    defense = 4;
-    cost = 90;
+    power = 9;
+    defense = 10;
+    cost = 200;
 }
 
 Black_Dragon :: ~Black_Dragon() = default;
@@ -18,5 +18,11 @@ int Black_Dragon :: getDefense() const
 {
     return defense;
 }
+
+int Black_Dragon :: getCost()const
+{
+    return cost;
+}
+
 
 void Black_Dragon::Attack(Creature *attackedCreature) const{}

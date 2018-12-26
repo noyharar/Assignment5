@@ -13,6 +13,8 @@ public:
     int getDefense()const override ;
     void specialSkill();
     void Attack(Creature* attackedCreature)const override;
+    int getCost()const override;
+
 
 };
 

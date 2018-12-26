@@ -20,7 +20,10 @@ int Zombie :: getDefense()const
     return defense;
 }
 
-
+int Zombie :: getCost()const
+{
+    return cost;
+}
 void Zombie :: specialSkill(){
     defense *= 2;
 }

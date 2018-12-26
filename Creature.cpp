@@ -1,5 +1,5 @@
 #include "Creature.h"
-
+#include "Zombie.h"
 
 Creature::Creature(){}
 

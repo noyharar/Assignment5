@@ -11,6 +11,7 @@ public:
     double getPower() const override ;
     int getDefense() const override ;
     void Attack(Creature* attackedCreature)const override;
+    int getCost()const override;
 };
 
 

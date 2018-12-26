@@ -15,15 +15,17 @@ using namespace std;
 int main() {
     int attackMenu, choiceNum, buyMenu;
     //    getUserNames();
-    string name = "Gal";
-    string name2 = "thief";
+   // string name = "Gal";
+    //string name2 = "thief";
    // Warrior gal(name);
    // Warrior gal;
-    Thief noy;
-    Necromancer yossi;
-//    gal.heroDetails();
-//    gal.increaseGold(3000);
-//    gal.heroDetails();
+   // Hero hero;
+    Thief gal;
+    Necromancer noy;
+      gal.buyCreatures();
+    gal.heroDetails();
+    gal.increaseGold(3000);
+    gal.heroDetails();
 //    gal.decreaseGold(1200);
 //    gal.heroDetails();
 //    gal.specialSkill();
@@ -66,35 +68,10 @@ int main() {
 //                }
 //                break;
 //            case 2:
-//                //
+//                //increaseGold(100)
 //                break;
 //            case 3:
-//                cout << "Buy creatures:\n";
-//                cout << "1. Buy zombies\n";
-//                cout << "2. Buy Archers\n";
-//                cout << "3. Buy Vampire\n";
-//                cout << "4. Buy Wizard\n";
-//                cout << "5. Buy Black Dragon\n";
-//                cin >> buyMenu;
-//                switch (buyMenu) {
-//                    case 1:
-//                        //
-//                        break;
-//                    case 2:
-//                        //
-//                        break;
-//                    case 3:
-//                        //
-//                        break;
-//                    case 4:
-//                        //
-//                        break;
-//                    case 5:
-//                        //
-//                        break;
-//                    default:
-//                        cout << "please choose a valid number\n";
-//                }
+//                  /buyCreatures;
 //                break;
 //            case 4:
 //                //

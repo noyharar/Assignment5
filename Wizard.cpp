@@ -21,6 +21,11 @@ int Wizard ::getDefense()const
     return defense;
 }
 
+int Wizard :: getCost()const
+{
+    return cost;
+}
+
 void Wizard::Attack(Creature *attackedCreature) const
 {
 

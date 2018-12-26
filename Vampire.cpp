@@ -20,5 +20,10 @@ int Vampire :: getDefense() const
     return defense;
 }
 
+int Vampire :: getCost()const
+{
+    return cost;
+}
+
 void Vampire :: Attack(Creature *attackedCreature) const{}
 

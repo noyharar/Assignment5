@@ -19,6 +19,12 @@ int Archer ::getDefense() const
     return defense;
 }
 
+int Archer :: getCost()const
+{
+    return cost;
+}
+
+
 //void Archer :: specialSkill(){
 //    defense *= 1.2;
 //}

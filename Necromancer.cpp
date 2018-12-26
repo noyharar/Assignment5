@@ -11,11 +11,11 @@ Necromancer::Necromancer():Hero()
     type = getType();
 }
 
-Necromancer::Necromancer(char *iheroName):Hero()
-{
-    strcpy(heroName,iheroName);
-    type = "Necromancer";
-}
+//Necromancer::Necromancer(char *iheroName):Hero()
+//{
+//    strcpy(heroName,iheroName);
+//    type = "Necromancer";
+//}
 
 Necromancer::~Necromancer(){}
 
@@ -24,7 +24,7 @@ string Necromancer::getType() const
 {
     return "Necromancer";
 }
-/*
+
 char *Necromancer::getName() const
 {
     char *tempName = NULL;
@@ -32,23 +32,9 @@ char *Necromancer::getName() const
     strcpy(tempName,heroName);
     return tempName;
 }
-*/
-
-string Necromancer::printCreatures() const
-{
-    string s;
-    /*
-     * foreach creature in creatureList
-     * {
-     *      s = s + printCreature;
-     * }
-     */
-
-    return s;
-}
-
-void Necromancer::specialSkill()
-{
-    Zombie zomb;
+//
+//void Necromancer::specialSkill() const
+//{
+//    Zombie zomb;
 //    this->AddCreatureToList(&zomb);
-}
+//}

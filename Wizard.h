@@ -14,6 +14,7 @@ class Wizard : public Creature{
     int getDefense()const override;
     void specialSkill();
     void Attack(Creature* attackedCreature)const;
+    int getCost()const override;
 };
 
 

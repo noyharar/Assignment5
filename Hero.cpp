@@ -4,8 +4,9 @@ CreatureData :: CreatureData(){
     numOfCreature = 0;
     creature = NULL;
 }
-CreatureData :: CreatureData(Creature* cr, int num)
+CreatureData :: CreatureData(Creature* cr,string name, int num)
 {
+    creName = name;
     creature = cr;
     numOfCreature = num;
 }
@@ -20,7 +21,6 @@ Hero :: Hero(){
     legalName(name);
     strcpy(heroName,name);
     delete[] name;
-
     goldQty = 750;
 
     Zombie* zombie = new Zombie();
@@ -29,19 +29,19 @@ Hero :: Hero(){
     Archer* archer = new Archer();
     Black_Dragon* bDrag = new Black_Dragon();
 
-    CreatureData cr0 = CreatureData(bDrag,0);
-    CreatureData cr1 = CreatureData(wizard,0);
-    CreatureData cr2 = CreatureData(archer,0);
-    CreatureData cr3 = CreatureData(vampire,0);
-    CreatureData cr4 = CreatureData(zombie,0);
+    CreatureData cr0 = CreatureData(bDrag,"Black_Dragon",0);
+    CreatureData cr1 = CreatureData(wizard,"Wizard",0);
+    CreatureData cr2 = CreatureData(archer,"Archer",0);
+    CreatureData cr3 = CreatureData(vampire,"Vampire",0);
+    CreatureData cr4 = CreatureData(zombie,"Zombie",0);
 
-    CreatureData* cList = new CreatureData[5] ;
+    creatureList  = new CreatureData[5] ;
 
-    cList[0] = cr0;
-    cList[1] = cr1;
-    cList[2] = cr2;
-    cList[3] = cr3;
-    cList[4] = cr4;
+    creatureList[0] = cr0;
+    creatureList[1] = cr1;
+    creatureList[2] = cr2;
+    creatureList[3] = cr3;
+    creatureList[4] = cr4;
 }
 
 Hero ::~Hero() {}
@@ -75,7 +75,8 @@ int Hero::getGold() const
 /// Print the Hero Details
 void Hero::heroDetails()
 {
-    cout << getName() << " " << getType() << " " << getGold() << " " << printCreatures() << endl;
+    cout << getName() << " " << getTypeForPrint() + ":\n" << getGold() << " gold\n";;
+    printCreatures();
 }
 
 /// Increases the number of gold of the Hero by amount
@@ -105,11 +106,11 @@ Hero &Hero::getHero()
 }
 
 ///// Gets the Type of the Hero
-///// \return string as the Type of the Hero
-//string Hero::getType() const
-//{
-//    return type;
-//}
+/// \return string as the Type of the Hero
+string Hero::getTypeForPrint() const
+{
+    return type;
+}
 
 /// Gets the name of the hero
 /// \return char* as the name of the hero
@@ -134,6 +135,65 @@ void Hero::decreaseGold(int amount)
         } else
         {
             this->goldQty -= amount;
+        }
+    }
+}
+
+void Hero::buyCreatures() {
+    int buyMenu;
+    cout << "Buy creatures:\n";
+    cout << "1. Buy zombies\n";
+    cout << "2. Buy Archers\n";
+    cout << "3. Buy Vampire\n";
+    cout << "4. Buy Wizard\n";
+    cout << "5. Buy Black Dragon\n";
+    cin >> buyMenu;
+    switch (buyMenu) {
+        case 1:
+            helpToBuy(4);
+            break;
+
+        case 2:
+            helpToBuy(2);
+            break;
+        case 3:
+            helpToBuy(3);
+            break;
+        case 4:
+            helpToBuy(1);
+            break;
+        case 5:
+            helpToBuy(0);
+            break;
+        default:
+            cout << "please choose a valid number\n";
+
+    }
+}
+
+void Hero :: helpToBuy(int index){
+    int wantToBuy = 0;
+    int totalCost = 0;
+    creatureList[index].creature->showDetails();
+    cout << "Please Enter how many creatures you want to buy:\n";
+    cin >> wantToBuy;
+    totalCost = wantToBuy*(creatureList[index].creature->getCost());
+    if(totalCost > goldQty) {
+        cout << "You do not have enough gold\n";
+    }else{
+        creatureList[index].numOfCreature += wantToBuy;
+        goldQty -= totalCost;
+    }
+}
+
+void Hero :: printCreatures()const{
+    for(int i = 0 ; i < 5 ; i++) {
+        if (creatureList[i].numOfCreature > 0) {
+            if (i < 4) {
+                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << " " << endl;
+            } else {
+                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << "." << endl;
+            }
         }
     }
 }

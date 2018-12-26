@@ -22,6 +22,7 @@ class Creature
     void showDetails()const;
     virtual double getPower()const=0;
     virtual int getDefense()const=0;
+    virtual int getCost()const=0;
 //    virtual void specialSkill()const=0;
 };
 
