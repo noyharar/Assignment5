@@ -1,6 +1,6 @@
 #ifndef Creature_H
 #define Creature_H
-
+ 
 #include <string>
 #include <iostream>
 #include <string.h>
