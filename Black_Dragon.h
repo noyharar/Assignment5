@@ -8,9 +8,9 @@ class Black_Dragon : public Creature{
 public:
     Black_Dragon();
     ~Black_Dragon() override;
-    double getPower();
-    int getDefense();
-//    void Attack(Creature* attackedCreature)const;
+    double getPower() const override ;
+    int getDefense() const override ;
+    void Attack(Creature* attackedCreature)const override;
 };
 
 

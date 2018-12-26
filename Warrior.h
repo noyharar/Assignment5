@@ -4,7 +4,8 @@
 #include "Hero.h"
 
 class Warrior : public Hero{
-
+    public:
+    string getType();
 };
 
 

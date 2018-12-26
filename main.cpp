@@ -4,14 +4,14 @@
 #include "Creature.h"
 #include "Zombie.h"
 #include "Wizard.h"
+#include "Hero.h"
 //#include "Black_Dragon.h"
 
 using namespace std;
 
 int main() {
     int attackMenu, choiceNum, buyMenu;
-
-
+    Hero hero;
 
 //    while (1) {
 //        // print menu

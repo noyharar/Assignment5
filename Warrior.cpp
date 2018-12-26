@@ -1,5 +1,9 @@
-//
-// Created by ise on 23/12/18.
-//
-
 #include "Warrior.h"
+
+//Warrior :: Warrior(){};
+//
+//Warrior :: ~Warrior();
+//
+//Warrior :: string getType(){
+
+//}

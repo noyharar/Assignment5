@@ -9,8 +9,10 @@ class Vampire : public Creature{
 public:
     Vampire();
     ~Vampire();
-    double getPower();
-    int getDefense();
+    double getPower() const override;
+    int getDefense() const override;
+    void Attack(Creature* attackedCreature)const override;
+
 
 };
 

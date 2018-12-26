@@ -10,12 +10,15 @@ Vampire :: Vampire(){
 
 Vampire::~Vampire(){}
 
-double Vampire :: getPower()
+double Vampire :: getPower() const
 {
     return power;
 }
 
-int Vampire :: getDefense()
+int Vampire :: getDefense() const
 {
     return defense;
 }
+
+void Vampire :: Attack(Creature *attackedCreature) const{}
+

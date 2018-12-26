@@ -13,10 +13,7 @@ class Creature
     int defense;
     int cost;
 
-  //  string name;
-
  public:
-
 
     Creature();
   //  Creature(string,int,int,int);

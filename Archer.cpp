@@ -3,22 +3,24 @@
 
 Archer :: Archer() {
     power = 5;
-    defence = 4;
+    defense = 4;
     cost = 90;
 }
 
 Archer :: ~Archer() {}
 
-int Archer :: getPower()
+double Archer :: getPower() const
 {
     return power;
 }
 
-int Archer :: getDefence()
+int Archer ::getDefense() const
 {
-    return defence;
+    return defense;
 }
 
-void Archer :: specialSkill(){
-    defence *= 1.2;
-}
+//void Archer :: specialSkill(){
+//    defense *= 1.2;
+//}
+
+void Archer :: Attack(Creature *attackedCreature) const{}
