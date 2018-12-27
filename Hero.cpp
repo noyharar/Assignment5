@@ -238,6 +238,7 @@ void Hero::printNameType()const
 
 void Hero::attackOpponent()
 {
+    int numOfThisTurn,powerOfThisTurn, defenseOfAttackedOp;
     string creatureFight, myCreature;
     cout << "Please insert your opponent name:" << endl;
     string getHeroName;
@@ -248,23 +249,78 @@ void Hero::attackOpponent()
     cout << endl;
     AttackedOp->printNameType();
     AttackedOp->printCreatures();
-    cout << this->getName() << "'s turn:" << endl;
-    cout << "<MY_Creature> <Op_Creture>" << endl;
-    cin >> creatureFight;
+    Hero* thisTurn = this;
 
-    string delim = " ";
-    myCreature = creatureFight.substr(0,creatureFight.find(delim));
-    creatureFight.erase(0,creatureFight.find(delim) + delim.length());
+    while(ifNotDie() && AttackedOp->ifNotDie()){
+        cout << thisTurn->getName() << "'s turn:" << endl;
+        cout << "<MY_Creature> <Op_Creture>" << endl;
+        cin >> creatureFight;
+        string delim = " ";
+        myCreature = creatureFight.substr(0,creatureFight.find(delim));
+        creatureFight.erase(0,creatureFight.find(delim) + delim.length());
+        //check if is legal fight
+        if(thisTurn->isAvailableCreacure(myCreature) && AttackedOp->isAvailableCreacure(creatureFight)){
+            CreatureData currentAttacedCreature = AttackedOp->creatureList[indexInList(creatureFight)];
+            CreatureData thisCrearture = thisTurn->creatureList[indexInList(myCreature)];
 
-    if(myCreature == "Black_Dragon")
-    {
-        if(creatureList[0].numOfCreature == 0)
-        {
-            return;
+            numOfThisTurn = thisCrearture.numOfCreature;
+            powerOfThisTurn = thisCrearture.creature->getPower();
+            defenseOfAttackedOp = currentAttacedCreature.creature->getDefense();
+
+            currentAttacedCreature.numOfCreature = (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
+
         }
+
+
     }
 
 
 
 
+}
+
+int Hero :: indexInList(string creacureName){
+    int index;
+    if(creacureName == "Black_Dragon")
+    {
+        index = 0;
+    }
+    else if (creacureName == "Wizard")
+    {
+        index = 1;
+    }
+    else if (creacureName == "Archer")
+    {
+        index = 2;
+    }
+    else if (creacureName == "Vampire")
+    {
+        index = 3;
+    }
+    else if(creacureName == "Zombie")
+    {
+        index = 4;
+    }
+    return index;
+}
+
+bool Hero :: ifNotDie(){
+    int sum = 0;
+    for(int i = 0; i < 5 ; i++) {
+       sum += creatureList[i].numOfCreature;
+    }
+    if (sum == 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+bool Hero :: isAvailableCreacure(string creacureName){
+    int index = indexInList(creacureName);
+
+    if (creatureList[index].numOfCreature > 0) {
+        return true;
+    }
+        return false;
 }

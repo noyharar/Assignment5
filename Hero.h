@@ -34,8 +34,10 @@ public:
     void decreaseGold(int amount);
     string getTypeForPrint() const;
     Hero& getHero();
-
+    bool ifNotDie();
+    bool isAvailableCreacure(string);
     void printNameType()const;
+    int indexInList(string);
 
 
     Hero* searchHeroByName(const string heroByName)const;
