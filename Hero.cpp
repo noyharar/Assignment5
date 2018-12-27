@@ -240,10 +240,15 @@ void Hero::attackOpponent()
 {
     int numOfThisTurn,powerOfThisTurn, defenseOfAttackedOp;
     string creatureFight, myCreature;
-    cout << "Please insert your opponent name:" << endl;
-    string getHeroName;
-    cin >> getHeroName;
-    Hero* AttackedOp = searchHeroByName(getHeroName);
+    Hero* AttackedOp = NULL;
+    //check if the attacked name is available in the users names
+    while(AttackedOp == NULL){
+        cout << "Please insert your opponent name:" << endl;
+        string getHeroName;
+        cin >> getHeroName;
+        AttackedOp = searchHeroByName(getHeroName);
+    }
+    //print my hero details
     this->printNameType();
     this->printCreatures();
     cout << endl;
@@ -251,32 +256,45 @@ void Hero::attackOpponent()
     AttackedOp->printCreatures();
     Hero* thisTurn = this;
 
-    while(ifNotDie() && AttackedOp->ifNotDie()){
+    //fight until someone died
+    while(thisTurn->ifNotDie() && AttackedOp->ifNotDie()){
         cout << thisTurn->getName() << "'s turn:" << endl;
         cout << "<MY_Creature> <Op_Creture>" << endl;
         cin >> creatureFight;
         string delim = " ";
+        //my hero name
         myCreature = creatureFight.substr(0,creatureFight.find(delim));
+        //attacked name
         creatureFight.erase(0,creatureFight.find(delim) + delim.length());
-        //check if is legal fight
-        if(thisTurn->isAvailableCreacure(myCreature) && AttackedOp->isAvailableCreacure(creatureFight)){
+        //check if the creatures are valid
+        if(thisTurn->isAvailableCreacure(myCreature) && AttackedOp->isAvailableCreacure(creatureFight))
+        {
             CreatureData currentAttacedCreature = AttackedOp->creatureList[indexInList(creatureFight)];
             CreatureData thisCrearture = thisTurn->creatureList[indexInList(myCreature)];
 
             numOfThisTurn = thisCrearture.numOfCreature;
             powerOfThisTurn = thisCrearture.creature->getPower();
             defenseOfAttackedOp = currentAttacedCreature.creature->getDefense();
-
+            //check and update how many creatures have been died
             currentAttacedCreature.numOfCreature = (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
 
+            //print the updated details
+            this->printNameType();
+            this->printCreatures();
+            cout << endl;
+            AttackedOp->printNameType();
+            AttackedOp->printCreatures();
+            thisTurn = AttackedOp;
+            AttackedOp = this;
         }
-
-
     }
 
-
-
-
+    //if someone died - no creatures
+    if(!ifNotDie()){
+        cout << "You have been perished\n";
+    }else{
+        cout << "You have been victorious\n";
+    }
 }
 
 int Hero :: indexInList(string creacureName){
