@@ -317,28 +317,28 @@ void Hero::attackOpponent()
 /**
  * Searches for the index of the Creature
  * for example Black_Dragon is index 0
- * @param creacureName - String of the Creature Name \"Black_Dragon\"
+ * @param creatureName - String of the Creature Name \"Black_Dragon\"
  * @return the index of the Creature
  */
-int Hero :: indexInList(string creacureName){
+int Hero :: indexInList(string creatureName){
     int index;
-    if(creacureName == "Black_Dragon")
+    if(creatureName == "Black_Dragon")
     {
         index = 0;
     }
-    else if (creacureName == "Wizard")
+    else if (creatureName == "Wizard")
     {
         index = 1;
     }
-    else if (creacureName == "Archer")
+    else if (creatureName == "Archer")
     {
         index = 2;
     }
-    else if (creacureName == "Vampire")
+    else if (creatureName == "Vampire")
     {
         index = 3;
     }
-    else if(creacureName == "Zombie")
+    else if(creatureName == "Zombie")
     {
         index = 4;
     }
