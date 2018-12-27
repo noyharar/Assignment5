@@ -194,6 +194,10 @@ void Hero :: helpToBuy(int index){
     }
 }
 
+/**
+ * Prints each Creature of this Hero and its count
+ * <NumberOfCreature1> <Creature1_Type>
+ */
 void Hero :: printCreatures()const{
     for(int i = 0 ; i < 5 ; i++) {
         if (creatureList[i].numOfCreature > 0) {
@@ -206,6 +210,11 @@ void Hero :: printCreatures()const{
     }
 }
 
+/**
+ * Searches for a Hero in the map of all heroes by its name
+ * @param heroByName - The name of the Hero
+ * @return Pointer to the Hero with the name heroByName
+ */
 Hero* Hero::searchHeroByName(const string heroByName)const
 {
     map<string,Hero*>::iterator it1;
@@ -219,6 +228,9 @@ Hero* Hero::searchHeroByName(const string heroByName)const
     }
 }
 
+/**
+ * Iterates over the Heroes map and prints them all
+ */
 void Hero::printAllHeroses()
 {
     map<string,Hero*>::iterator it1;
@@ -231,6 +243,10 @@ void Hero::printAllHeroses()
 
 }
 
+/**
+ * Prints Hero Name and its type
+ * <HeroName1> <Type1>
+ */
 void Hero::printNameType()const
 {
     cout << getName() << " " << getType() << endl;
@@ -297,6 +313,13 @@ void Hero::attackOpponent()
     }
 }
 
+
+/**
+ * Searches for the index of the Creature
+ * for example Black_Dragon is index 0
+ * @param creacureName - String of the Creature Name \"Black_Dragon\"
+ * @return the index of the Creature
+ */
 int Hero :: indexInList(string creacureName){
     int index;
     if(creacureName == "Black_Dragon")
@@ -322,6 +345,12 @@ int Hero :: indexInList(string creacureName){
     return index;
 }
 
+/**
+ * Checks whether or not the Hero is Perished
+ * AKA all of its creatures are dead
+ *
+ * @return false if all of the Hero's Creatures are dead
+ */
 bool Hero :: ifNotDie(){
     int sum = 0;
     for(int i = 0; i < 5 ; i++) {
@@ -334,8 +363,13 @@ bool Hero :: ifNotDie(){
     }
 }
 
-bool Hero :: isAvailableCreacure(string creacureName){
-    int index = indexInList(creacureName);
+/**
+ * Checks whether or not the Hero has more Creature from the type creatureName
+ * @param creatureName - the type of the creature needed
+ * @return true if the Hero has more Creature of type creatureName
+ */
+bool Hero :: isAvailableCreacure(string creatureName){
+    int index = indexInList(creatureName);
 
     if (creatureList[index].numOfCreature > 0) {
         return true;
