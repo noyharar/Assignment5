@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void showAllHeros();
+void showAllHeros(Hero& h1);
 
 int main() {
     bool tookMyMoney = false, specailTurn = false;
@@ -66,7 +66,7 @@ int main() {
                 cin >> attackMenu;
                 switch (attackMenu) {
                     case 1:
-                        showAllHeros();
+                        showAllHeros(randomTurns[playerTurnNum]->getHero());
                         break;
                     case 2:
                         //
@@ -124,13 +124,35 @@ int main() {
         return 0;
 }
 
-void showAllHeros()
+void showAllHeros(Hero& h1)
 {
+
     map<string,Hero*>::iterator it1;
     it1 = Hero::allHeros.begin();
-    while (it1 != Hero::allHeros.end())
+    while (it1 != Hero::allHeros.end() )
     {
-        it1->second->printNameType();
+        if(!(h1.getName() == it1->first)&& it1->second->getType() == "Warrior")
+        {
+            it1->second->printNameType();
+        }
+        it1++;
+    }
+    it1 = Hero::allHeros.begin();
+    while (it1 != Hero::allHeros.end() )
+    {
+        if(!(h1.getName() == it1->first)&& it1->second->getType() == "Thief")
+        {
+            it1->second->printNameType();
+        }
+        it1++;
+    }
+    it1 = Hero::allHeros.begin();
+    while (it1 != Hero::allHeros.end() )
+    {
+        if(!(h1.getName() == it1->first)&& it1->second->getType() == "Necromancer")
+        {
+            it1->second->printNameType();
+        }
         it1++;
     }
 }

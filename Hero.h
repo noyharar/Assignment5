@@ -43,7 +43,7 @@ public:
     void helpToBuy(int index);
     char* getName()const;
     void printCreatures()const;
-//     void attackOpponent(Hero);
+    void attackOpponent();
 //    virtual void attackOpponent(/*Hero h1*/)=0;//How do i get a Hero Type variable
     virtual void specialSkill()=0;
     static void printAllHeroses();

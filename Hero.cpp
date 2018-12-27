@@ -235,3 +235,36 @@ void Hero::printNameType()const
 {
     cout << getName() << " " << getType() << endl;
 }
+
+void Hero::attackOpponent()
+{
+    string creatureFight, myCreature;
+    cout << "Please insert your opponent name:" << endl;
+    string getHeroName;
+    cin >> getHeroName;
+    Hero* AttackedOp = searchHeroByName(getHeroName);
+    this->printNameType();
+    this->printCreatures();
+    cout << endl;
+    AttackedOp->printNameType();
+    AttackedOp->printCreatures();
+    cout << this->getName() << "'s turn:" << endl;
+    cout << "<MY_Creature> <Op_Creture>" << endl;
+    cin >> creatureFight;
+
+    string delim = " ";
+    myCreature = creatureFight.substr(0,creatureFight.find(delim));
+    creatureFight.erase(0,creatureFight.find(delim) + delim.length());
+
+    if(myCreature == "Black_Dragon")
+    {
+        if(creatureList[0].numOfCreature == 0)
+        {
+            return;
+        }
+    }
+
+
+
+
+}
