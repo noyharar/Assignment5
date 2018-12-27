@@ -14,7 +14,7 @@ public:
   char* getName()const;
 
 //  void attackOpponent(/*Hero h1*/)override;//How do i get a Hero Type variable
- //   void specialSkill()const override ;
+    void specialSkill() override ;
 //  void AddCreatureToList(Creature *c1)override;
 
 

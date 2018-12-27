@@ -32,9 +32,12 @@ char *Necromancer::getName() const
     strcpy(tempName,heroName);
     return tempName;
 }
-//
-//void Necromancer::specialSkill() const
-//{
-//    Zombie zomb;
-//    this->AddCreatureToList(&zomb);
-//}
+
+
+/**
+ * Increase Zombie num;
+ */
+void Necromancer::specialSkill()
+{
+    creatureList[4].numOfCreature++;
+}

@@ -12,83 +12,125 @@
 
 using namespace std;
 
+void showAllHeros();
+
 int main() {
+    bool tookMyMoney = false, specailTurn = false;
     int attackMenu, choiceNum, buyMenu;
-    //    getUserNames();
-   // string name = "Gal";
-    //string name2 = "thief";
-   // Warrior gal(name);
-   // Warrior gal;
-   // Hero hero;
+    int playerTurnNum;
+    int insertedPlayers = 0;
+    int numOfPlayers;
+    numOfPlayers = 6;
+    Hero *randomTurns[numOfPlayers];
+    for (int i = 0; i < numOfPlayers; ++i) {
+        randomTurns[i] = NULL;
+    }
     Thief gal;
+    Thief gal2;
     Necromancer noy;
-      gal.buyCreatures();
-    gal.heroDetails();
-    gal.increaseGold(3000);
-    gal.heroDetails();
-//    gal.decreaseGold(1200);
-//    gal.heroDetails();
-//    gal.specialSkill();
+    Necromancer noy2;
+    Necromancer noy3;
+    Warrior gal3;
 
-//    Thief myThief(name2);
-//    myThief.heroDetails();
-//    myThief.specialSkill(gal);
-//    myThief.heroDetails();
-//    gal.heroDetails();
+    map<string,Hero*>::iterator it1;
+    it1 = Hero::allHeros.begin();
+    while (insertedPlayers < numOfPlayers && it1 != Hero::allHeros.end()) {
+        playerTurnNum = rand() % numOfPlayers;
+        if (randomTurns[playerTurnNum] == NULL) {
+            randomTurns[playerTurnNum] = &it1->second->getHero();
+            it1++;
+            insertedPlayers++;
+        }
+    }
 
 
+    playerTurnNum = 0;
     //  Hero hero;
-//    while (1) {
-//        // print menu
-//        cout << "What is your next step in the path to victory?\n";
-//        cout << "1. Attack\n";
-//        cout << "2. Get daily gold\n";
-//        cout << "3. Buy creatures\n";
-//        cout << "4. Show details\n";
-//        cout << "5. Spacial skill\n";
-//        cout << "6. End of my turn\n";
-//        cout << "7. Exit\n";
-//        // get input from user
-//        cin >> choiceNum;
-//        // take action
-//        switch (choiceNum) {
-//            case 1:
-//                cout << "1. Show me my opponents\n";
-//                cout << "2. Attack hero\n";
-//                cin >> attackMenu;
-//                switch (attackMenu) {
-//                    case 1:
-//                        //
-//                        break;
-//                    case 2:
-//                        //
-//                        break;
-//                    default:
-//                        cout << "please choose a valid number\n";
-//                }
-//                break;
-//            case 2:
-//                //increaseGold(100)
-//                break;
-//            case 3:
-//                  /buyCreatures;
-//                break;
-//            case 4:
-//                //
-//                break;
-//            case 5:
-//                //
-//                break;
-//            case 6:
-//                //
-//                break;
-//            case 7:
-//                exit(0);
-//            default:
-//                cout << ("please choose a valid number\n");
-//        }
-//    }
+    while (1) {
+        // print menu
+        cout << "What is your next step in the path to victory?\n";
+        cout << "1. Attack\n";
+        cout << "2. Get daily gold\n";
+        cout << "3. Buy creatures\n";
+        cout << "4. Show details\n";
+        cout << "5. Spacial skill\n";
+        cout << "6. End of my turn\n";
+        cout << "7. Exit\n";
+        // get input from user
+        cin >> choiceNum;
+        // take action
+        switch (choiceNum) {
+            case 1:
+                cout << "1. Show me my opponents\n";
+                cout << "2. Attack hero\n";
+                cin >> attackMenu;
+                switch (attackMenu) {
+                    case 1:
+                        showAllHeros();
+                        break;
+                    case 2:
+                        //
+                        break;
+                    default:
+                        cout << "please choose a valid number\n";
+                }
+                break;
+            case 2:
+                if(!tookMyMoney)
+                {
+                    randomTurns[playerTurnNum]->increaseGold(100);
+                    tookMyMoney = true;
+                }
+                break;
+            case 3:
+                randomTurns[playerTurnNum]->buyCreatures();
+                break;
+            case 4:
+                randomTurns[playerTurnNum]->heroDetails();
+                break;
+            case 5:
+                if(!specailTurn)
+                {
+//                    try{
+//
+//                    }
+//                    catch exception as e
+//                    {
+//
+//                    }
+                    randomTurns[playerTurnNum]->specialSkill();
+                    specailTurn = true;
+                }
+                break;
+            case 6:
+                if(playerTurnNum + 1 >= numOfPlayers)
+                {
+                    playerTurnNum = 0;
+                } else
+                {
+                    playerTurnNum++;
+                }
+                tookMyMoney = false;
+                specailTurn = false;
+                break;
+            case 7:
+                exit(0);
+            default:
+                cout << ("please choose a valid number\n");
+        }
+    }
 
         int x; // for BreakPoint
         return 0;
+}
+
+void showAllHeros()
+{
+    map<string,Hero*>::iterator it1;
+    it1 = Hero::allHeros.begin();
+    while (it1 != Hero::allHeros.end())
+    {
+        it1->second->printNameType();
+        it1++;
+    }
 }

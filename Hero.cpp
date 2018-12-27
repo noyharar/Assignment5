@@ -1,5 +1,8 @@
 #include "Hero.h"
 
+
+map<string,Hero*> Hero::allHeros;
+
 CreatureData :: CreatureData(){
     numOfCreature = 0;
     creature = NULL;
@@ -18,10 +21,15 @@ Hero :: Hero(){
     heroName = new char[31];
     cout << "Please enter a username:\n";
     cin >> name;
-    legalName(name);
+    while(!legalName(name))
+    {
+        cout << "Please enter a username:\n";
+        cin >> name;
+    }
     strcpy(heroName,name);
     delete[] name;
     goldQty = 750;
+    allHeros[this->getName()] = this;
 
     Zombie* zombie = new Zombie();
     Wizard* wizard = new Wizard();
@@ -190,10 +198,40 @@ void Hero :: printCreatures()const{
     for(int i = 0 ; i < 5 ; i++) {
         if (creatureList[i].numOfCreature > 0) {
             if (i < 4) {
-                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << " " << endl;
+                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << " ";
             } else {
-                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << "." << endl;
+                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << ".";
             }
         }
     }
+}
+
+Hero* Hero::searchHeroByName(const string heroByName)const
+{
+    map<string,Hero*>::iterator it1;
+    it1 = allHeros.find(heroByName);
+    if(it1 != allHeros.end())
+    {
+        return allHeros[heroByName];
+    } else
+    {
+        return NULL;
+    }
+}
+
+void Hero::printAllHeroses()
+{
+    map<string,Hero*>::iterator it1;
+    it1 = allHeros.begin();
+    while (it1 != allHeros.end())
+    {
+        it1->second->heroDetails();
+        it1++;
+    }
+
+}
+
+void Hero::printNameType()const
+{
+    cout << getName() << " " << getType() << endl;
 }

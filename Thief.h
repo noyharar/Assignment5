@@ -5,15 +5,16 @@
 #include "Hero.h"
 
 class Thief : public Hero{
-
-public:
+ private:
+  void specialSkilled(Hero& h1);
+ public:
     Thief();
   //  Thief(char* heroName);
     ~Thief();
-    string getType()const;
-    char* getName()const;
+    string getType()const override;
 //  void attackOpponent(/*Hero h1*/)override;//How do i get a Hero Type variable
- //   void specialSkill() const;
+    void specialSkill() override;
+
 //  void AddCreatureToList(Creature *c1)override;
 
 

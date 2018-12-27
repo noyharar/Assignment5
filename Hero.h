@@ -1,6 +1,7 @@
 #ifndef ASSIGNMENT5_HERO_H
 #define ASSIGNMENT5_HERO_H
 
+#include <map>
 #include "Creature.h"
 #include "Zombie.h"
 #include "Black_Dragon.h"
@@ -17,7 +18,9 @@ public:
     CreatureData* creatureList;
     string type;
 
-public:
+    static map<string,Hero*> allHeros;
+
+//public:
 
     Hero();
     ~Hero();
@@ -32,14 +35,18 @@ public:
     string getTypeForPrint() const;
     Hero& getHero();
 
+    void printNameType()const;
 
+
+    Hero* searchHeroByName(const string heroByName)const;
     void buyCreatures();
     void helpToBuy(int index);
     char* getName()const;
     void printCreatures()const;
 //     void attackOpponent(Hero);
 //    virtual void attackOpponent(/*Hero h1*/)=0;//How do i get a Hero Type variable
-//    virtual void specialSkill() const=0;
+    virtual void specialSkill()=0;
+    static void printAllHeroses();
 //    virtual void AddCreatureToList(Creature *c1)=0;
 };
 

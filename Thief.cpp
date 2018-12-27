@@ -25,34 +25,40 @@ string Thief::getType() const
     return "Thief";
 }
 
-/// Gets the name of the hero
-/// \return char* as the name of the hero
-char *Thief::getName() const
+
+void Thief::specialSkill()
 {
-   char *tempName = NULL;
-   tempName = new char[strlen(heroName)];
-   strcpy(tempName,heroName);
-   return tempName;
+    int theAmountToSteal = 70;
+    cout << "Please insert hero name:" << endl;
+    string getHeroName;
+    cin >> getHeroName;
+    Hero* stealFromHim = searchHeroByName(getHeroName);
+    if (stealFromHim)
+    {
+        Hero& refToSteal = *stealFromHim;
+        specialSkilled(refToSteal);
+    } else
+    {
+        cout << "There is no such Hero" << endl;
+    }
 }
-
-
 
 /// Steals 70 Gold Pieces from a hero.
 /// In order to call this method first retrieve a reference to a hero
 /// \param h1 - Reference to the Hero to steal from
-//void Thief::specialSkill() const{
-//
-////
-////    int h1Gold = h1.getGold();
-////    if (h1Gold >= 70)
-////    {
-////        h1.decreaseGold(70);
-////        this->increaseGold(70);
-////    } else
-////    {
-////        h1.decreaseGold(h1Gold);
-////        this->increaseGold(h1Gold);
-////    }
-//}
+void Thief::specialSkilled(Hero& h1){
+
+
+    int h1Gold = h1.getGold();
+    if (h1Gold >= 70)
+    {
+        h1.decreaseGold(70);
+        this->increaseGold(70);
+    } else
+    {
+        h1.decreaseGold(h1Gold);
+        this->increaseGold(h1Gold);
+    }
+}
 
 
