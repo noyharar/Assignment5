@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include <string>
 #include <stdio.h>
 #include "Creature.h"
 #include "Zombie.h"
@@ -15,22 +16,25 @@ using namespace std;
 void showAllHeros(Hero& h1);
 
 int main() {
+//    string test;
+//    getline(cin, test);
+//    cout << test;
     bool tookMyMoney = false, specailTurn = false;
     int attackMenu, choiceNum, buyMenu;
     int playerTurnNum;
     int insertedPlayers = 0;
     int numOfPlayers;
-    numOfPlayers = 6;
+    numOfPlayers = 2;
     Hero *randomTurns[numOfPlayers];
     for (int i = 0; i < numOfPlayers; ++i) {
         randomTurns[i] = NULL;
     }
     Thief gal;
     Thief gal2;
-    Necromancer noy;
-    Necromancer noy2;
-    Necromancer noy3;
-    Warrior gal3;
+//    Necromancer noy;
+//    Necromancer noy2;
+//    Necromancer noy3;
+//    Warrior gal3;
 
     map<string,Hero*>::iterator it1;
     it1 = Hero::allHeros.begin();
@@ -45,7 +49,7 @@ int main() {
 
 
     playerTurnNum = 0;
-    //  Hero hero;
+    cout << "Wellcome <userName" << endl;
     while (1) {
         // print menu
         cout << "What is your next step in the path to victory?\n";
@@ -69,7 +73,7 @@ int main() {
                         showAllHeros(randomTurns[playerTurnNum]->getHero());
                         break;
                     case 2:
-                        //
+                        randomTurns[playerTurnNum]->getHero().attackOpponent();
                         break;
                     default:
                         cout << "please choose a valid number\n";

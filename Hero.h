@@ -1,6 +1,7 @@
 #ifndef ASSIGNMENT5_HERO_H
 #define ASSIGNMENT5_HERO_H
 
+#include <string>
 #include <map>
 #include "Creature.h"
 #include "Zombie.h"
@@ -34,7 +35,7 @@ public:
     void decreaseGold(int amount);
     string getTypeForPrint() const;
     Hero& getHero();
-    bool ifNotDie();
+    bool ifDie();
     bool isAvailableCreacure(string);
     void printNameType()const;
     int indexInList(string);

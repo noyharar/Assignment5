@@ -1,3 +1,4 @@
+#include <limits>
 #include "Hero.h"
 
 
@@ -85,6 +86,9 @@ void Hero::heroDetails()
 {
     cout << getName() << " " << getTypeForPrint() + ":\n" << getGold() << " gold\n";;
     printCreatures();
+    if(!ifDie()) {
+        cout << ".\n";
+    }
 }
 
 /// Increases the number of gold of the Hero by amount
@@ -202,9 +206,9 @@ void Hero :: printCreatures()const{
     for(int i = 0 ; i < 5 ; i++) {
         if (creatureList[i].numOfCreature > 0) {
             if (i < 4) {
-                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << " ";
+                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << " " << flush;
             } else {
-                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << ".";
+                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << flush;
             }
         }
     }
@@ -255,60 +259,87 @@ void Hero::printNameType()const
 void Hero::attackOpponent()
 {
     int numOfThisTurn,powerOfThisTurn, defenseOfAttackedOp;
-    string creatureFight, myCreature;
+    string  myCreature, Op_Creature;
     Hero* AttackedOp = NULL;
     //check if the attacked name is available in the users names
     while(AttackedOp == NULL){
         cout << "Please insert your opponent name:" << endl;
         string getHeroName;
         cin >> getHeroName;
-        AttackedOp = searchHeroByName(getHeroName);
-    }
+        if(getHeroName == this->getName())
+            {
+                AttackedOp == NULL;
+            }else {
+            AttackedOp = searchHeroByName(getHeroName);
+            }
+        }
     //print my hero details
     this->printNameType();
     this->printCreatures();
     cout << endl;
     AttackedOp->printNameType();
     AttackedOp->printCreatures();
+    cout << endl;
+
     Hero* thisTurn = this;
 
     //fight until someone died
-    while(thisTurn->ifNotDie() && AttackedOp->ifNotDie()){
+    while(!thisTurn->ifDie() && !AttackedOp->ifDie()){
         cout << thisTurn->getName() << "'s turn:" << endl;
-        cout << "<MY_Creature> <Op_Creture>" << endl;
-        cin >> creatureFight;
-        string delim = " ";
-        //my hero name
-        myCreature = creatureFight.substr(0,creatureFight.find(delim));
-        //attacked name
-        creatureFight.erase(0,creatureFight.find(delim) + delim.length());
+        string creatureFight;
+        //check that the creatures are legalno
+        while(indexInList(myCreature) == -1 || indexInList(creatureFight) == -1)
+        {
+            cout << "<MY_Creature> <Op_Creature>" << endl;
+           // cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            getline(cin,creatureFight);
+            string delim = " ";
+            //my hero name
+             myCreature = creatureFight.substr(0,creatureFight.find(delim));
+            //attacked name;
+             creatureFight.erase(0,creatureFight.find(delim) + delim.length());
+        }
         //check if the creatures are valid
         if(thisTurn->isAvailableCreacure(myCreature) && AttackedOp->isAvailableCreacure(creatureFight))
         {
-            CreatureData currentAttacedCreature = AttackedOp->creatureList[indexInList(creatureFight)];
-            CreatureData thisCrearture = thisTurn->creatureList[indexInList(myCreature)];
+   /*         if((myCreature == "Zombie" && creatureFight == "Archer") || (myCreature == "Archer" && creatureFight == "Black_Dragon")){
+                thisTurn->specialSkill();
+            }
+            if(myCreature == "Black_Dragon" && creatureFight == "Wizard"){
+                AttackedOp->specialSkill();
+            }
+            */
+          //  CreatureData currentAttackedCreature = AttackedOp->creatureList[indexInList(creatureFight)];
+            CreatureData thisCreature = thisTurn->creatureList[indexInList(myCreature)];
 
-            numOfThisTurn = thisCrearture.numOfCreature;
-            powerOfThisTurn = thisCrearture.creature->getPower();
-            defenseOfAttackedOp = currentAttacedCreature.creature->getDefense();
+            numOfThisTurn = thisCreature.numOfCreature;
+            powerOfThisTurn = thisCreature.creature->getPower();
+         //   defenseOfAttackedOp = currentAttackedCreature.creature->getDefense();
+            defenseOfAttackedOp = AttackedOp->creatureList[indexInList(creatureFight)].creature->getDefense();
+
             //check and update how many creatures have been died
-            currentAttacedCreature.numOfCreature = (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
+           // currentAttackedCreature.numOfCreature -= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
+            AttackedOp->creatureList[indexInList(creatureFight)].numOfCreature -= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
 
+        if(!thisTurn->ifDie() && !AttackedOp->ifDie())
+        {
+            thisTurn = AttackedOp;
+            AttackedOp = this;
             //print the updated details
-            this->printNameType();
-            this->printCreatures();
+            thisTurn->printNameType();
+            thisTurn->printCreatures();
             cout << endl;
             AttackedOp->printNameType();
             AttackedOp->printCreatures();
-            thisTurn = AttackedOp;
-            AttackedOp = this;
+            cout << endl;
+          }
         }
     }
 
     //if someone died - no creatures
-    if(!ifNotDie()){
+    if(this->ifDie()){
         cout << "You have been perished\n";
-    }else{
+    }else {
         cout << "You have been victorious\n";
     }
 }
@@ -317,32 +348,30 @@ void Hero::attackOpponent()
 /**
  * Searches for the index of the Creature
  * for example Black_Dragon is index 0
- * @param creatureName - String of the Creature Name \"Black_Dragon\"
+ * @param creacureName - String of the Creature Name \"Black_Dragon\"
  * @return the index of the Creature
  */
 int Hero :: indexInList(string creatureName){
-    int index;
     if(creatureName == "Black_Dragon")
     {
-        index = 0;
+        return  0;
     }
     else if (creatureName == "Wizard")
     {
-        index = 1;
+        return 1;
     }
     else if (creatureName == "Archer")
     {
-        index = 2;
+        return 2;
     }
     else if (creatureName == "Vampire")
     {
-        index = 3;
+        return  3;
     }
-    else if(creatureName == "Zombie")
-    {
-        index = 4;
+    else if(creatureName == "Zombie") {
+        return  4;
     }
-    return index;
+    return -1;
 }
 
 /**
@@ -351,15 +380,15 @@ int Hero :: indexInList(string creatureName){
  *
  * @return false if all of the Hero's Creatures are dead
  */
-bool Hero :: ifNotDie(){
+bool Hero :: ifDie(){
     int sum = 0;
     for(int i = 0; i < 5 ; i++) {
        sum += creatureList[i].numOfCreature;
     }
     if (sum == 0){
-        return false;
-    }else{
         return true;
+    }else{
+        return false;
     }
 }
 
