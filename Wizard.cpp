@@ -26,8 +26,9 @@ int Wizard :: getCost()const
     return cost;
 }
 
-void Wizard::Attack(Creature *attackedCreature) const
-{
-
+void Wizard :: specialSkill(){
+    defense *= 2;
 }
+
+//void Wizard::Attack(Creature *attackedCreature) const {}
 

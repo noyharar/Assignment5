@@ -24,9 +24,8 @@ int Archer :: getCost()const
     return cost;
 }
 
+void Archer :: specialSkill(){
+    power *= 1.2;
+}
 
-//void Archer :: specialSkill(){
-//    defense *= 1.2;
-//}
-
-void Archer :: Attack(Creature *attackedCreature) const{}
+//void Archer :: Attack(Creature *attackedCreature) const{}

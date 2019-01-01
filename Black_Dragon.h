@@ -10,9 +10,10 @@ public:
     ~Black_Dragon() override;
     double getPower() const override ;
     int getDefense() const override ;
-    void Attack(Creature* attackedCreature)const override;
+ //   void Attack(Creature* attackedCreature)const override;
     int getCost()const override;
-};
+    void specialSkill();
 
+};
 
 #endif //ASSIGNMENT5_BLACK_DRAGON_H

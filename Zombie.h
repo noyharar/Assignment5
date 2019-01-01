@@ -12,7 +12,7 @@ class Zombie : public Creature {
     int getDefense()const override;
     int getCost()const override;
     void specialSkill();
-    void Attack(Creature* attackedCreature)const override;
+//    void Attack(Creature* attackedCreature)const override;
 
 };
 

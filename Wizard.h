@@ -13,7 +13,7 @@ class Wizard : public Creature{
     double getPower()const override;
     int getDefense()const override;
     void specialSkill();
-    void Attack(Creature* attackedCreature)const;
+//    void Attack(Creature* attackedCreature)const;
     int getCost()const override;
 };
 

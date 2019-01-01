@@ -73,7 +73,16 @@ int main() {
                         showAllHeros(randomTurns[playerTurnNum]->getHero());
                         break;
                     case 2:
-                        randomTurns[playerTurnNum]->getHero().attackOpponent();
+                        if(randomTurns[playerTurnNum]->getHero().attackOpponent()) {
+                                if (playerTurnNum + 1 >= numOfPlayers) {
+                                    playerTurnNum = 0;
+                                } else {
+                                    playerTurnNum++;
+                                }
+                                tookMyMoney = false;
+                                specailTurn = false;
+                            }
+
                         break;
                     default:
                         cout << "please choose a valid number\n";
@@ -127,6 +136,7 @@ int main() {
         int x; // for BreakPoint
         return 0;
 }
+
 
 void showAllHeros(Hero& h1)
 {

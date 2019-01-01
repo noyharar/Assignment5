@@ -1,6 +1,6 @@
 #include <limits>
 #include "Hero.h"
-
+#include <istream>
 
 map<string,Hero*> Hero::allHeros;
 
@@ -256,10 +256,11 @@ void Hero::printNameType()const
     cout << getName() << " " << getType() << endl;
 }
 
-void Hero::attackOpponent()
+bool Hero::attackOpponent()
 {
-    int numOfThisTurn,powerOfThisTurn, defenseOfAttackedOp;
-    string  myCreature, Op_Creature;
+    bool next = false;
+    int numOfThisTurn,powerOfThisTurn, defenseOfAttackedOp,howManyCan;
+    string  Op_Creature;
     Hero* AttackedOp = NULL;
     //check if the attacked name is available in the users names
     while(AttackedOp == NULL){
@@ -286,40 +287,39 @@ void Hero::attackOpponent()
     //fight until someone died
     while(!thisTurn->ifDie() && !AttackedOp->ifDie()){
         cout << thisTurn->getName() << "'s turn:" << endl;
-        string creatureFight;
-        //check that the creatures are legalno
+        string myCreature, creatureFight;
+        //check that the creatures are legal
+        creatureFight, myCreature = "";
         while(indexInList(myCreature) == -1 || indexInList(creatureFight) == -1)
         {
             cout << "<MY_Creature> <Op_Creature>" << endl;
-           // cin.ignore(numeric_limits<streamsize>::max(),'\n');
-            getline(cin,creatureFight);
-            string delim = " ";
-            //my hero name
-             myCreature = creatureFight.substr(0,creatureFight.find(delim));
-            //attacked name;
-             creatureFight.erase(0,creatureFight.find(delim) + delim.length());
+            cin >> myCreature >> creatureFight;
         }
         //check if the creatures are valid
         if(thisTurn->isAvailableCreacure(myCreature) && AttackedOp->isAvailableCreacure(creatureFight))
         {
-   /*         if((myCreature == "Zombie" && creatureFight == "Archer") || (myCreature == "Archer" && creatureFight == "Black_Dragon")){
-                thisTurn->specialSkill();
+          if((myCreature == "Zombie" && creatureFight == "Archer") || (myCreature == "Archer" && creatureFight == "Black_Dragon")){
+                thisTurn->creatureList[indexInList(myCreature)].creature->specialSkill();
             }
             if(myCreature == "Black_Dragon" && creatureFight == "Wizard"){
-                AttackedOp->specialSkill();
+                AttackedOp->creatureList[indexInList(creatureFight)].creature->specialSkill();
             }
-            */
+
           //  CreatureData currentAttackedCreature = AttackedOp->creatureList[indexInList(creatureFight)];
             CreatureData thisCreature = thisTurn->creatureList[indexInList(myCreature)];
-
             numOfThisTurn = thisCreature.numOfCreature;
             powerOfThisTurn = thisCreature.creature->getPower();
          //   defenseOfAttackedOp = currentAttackedCreature.creature->getDefense();
             defenseOfAttackedOp = AttackedOp->creatureList[indexInList(creatureFight)].creature->getDefense();
 
             //check and update how many creatures have been died
-           // currentAttackedCreature.numOfCreature -= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
-            AttackedOp->creatureList[indexInList(creatureFight)].numOfCreature -= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
+           // currentAttackedCreature.numOfCreature -= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;no
+            howManyCan= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
+            if(AttackedOp->creatureList[indexInList(creatureFight)].numOfCreature <= howManyCan){
+                AttackedOp->creatureList[indexInList(creatureFight)].numOfCreature = 0;
+            }else{
+                AttackedOp->creatureList[indexInList(creatureFight)].numOfCreature -= howManyCan;
+            }
 
         if(!thisTurn->ifDie() && !AttackedOp->ifDie())
         {
@@ -335,12 +335,13 @@ void Hero::attackOpponent()
           }
         }
     }
-
     //if someone died - no creatures
     if(this->ifDie()){
         cout << "You have been perished\n";
+        return true;
     }else {
         cout << "You have been victorious\n";
+        return false;
     }
 }
 

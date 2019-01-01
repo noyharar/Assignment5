@@ -24,5 +24,8 @@ int Black_Dragon :: getCost()const
     return cost;
 }
 
+void Black_Dragon :: specialSkill(){
+    cout << "no special skil\n";
+}
 
-void Black_Dragon::Attack(Creature *attackedCreature) const{}
+//void Black_Dragon::Attack(Creature *attackedCreature) const{}

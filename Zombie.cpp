@@ -25,10 +25,10 @@ int Zombie :: getCost()const
     return cost;
 }
 void Zombie :: specialSkill(){
-    defense *= 2;
+    power *= 2;
 }
 
-void Zombie::Attack(Creature *attackedCreature) const
-{
-
-}
+//void Zombie::Attack(Creature *attackedCreature) const
+//{
+//
+//}

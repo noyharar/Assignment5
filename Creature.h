@@ -18,12 +18,12 @@ class Creature
     Creature();
   //  Creature(string,int,int,int);
     virtual ~Creature();
-    virtual void Attack(Creature* attackedCreature)const=0;
+    //virtual void Attack(Creature* attackedCreature)const=0;
     void showDetails()const;
     virtual double getPower()const=0;
     virtual int getDefense()const=0;
     virtual int getCost()const=0;
-//    virtual void specialSkill()const=0;
+    virtual void specialSkill()=0;
 };
 
 
