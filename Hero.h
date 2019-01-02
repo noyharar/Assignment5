@@ -41,7 +41,9 @@ public:
     int indexInList(string);
 
 
-    Hero* searchHeroByName(const string heroByName)const;
+
+
+        Hero* searchHeroByName(const string heroByName)const;
     void buyCreatures();
     void helpToBuy(int index);
     char* getName()const;

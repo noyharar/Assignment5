@@ -16,6 +16,7 @@ CreatureData :: CreatureData(Creature* cr,string name, int num)
 }
 
 CreatureData :: ~CreatureData() {}
+/////////////////////////////////////////////////////////////////
 
 Hero :: Hero(){
     char* name = new char[31];
@@ -202,16 +203,17 @@ void Hero :: helpToBuy(int index){
  * <NumberOfCreature1> <Creature1_Type>
  */
 void Hero :: printCreatures()const{
+    string printStr;
     for(int i = 0 ; i < 5 ; i++) {
         if (creatureList[i].numOfCreature > 0) {
-            if (i < 4) {
-                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << " " << flush;
-            } else {
-                cout << creatureList[i].numOfCreature << " " << creatureList[i].creName << flush;
-            }
+       //     if (i < 4) {
+                printStr = printStr + to_string(creatureList[i].numOfCreature) + " " + creatureList[i].creName +" ";
         }
     }
+        cout << printStr.substr(0, printStr.length() - 1);
+
 }
+
 
 /**
  * Searches for a Hero in the map of all heroes by its name
