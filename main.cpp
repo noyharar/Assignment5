@@ -25,29 +25,31 @@ void CreateFolder();
 
 void showAllHeros(Hero& h1);
 
-int main() {
+int nextTurn(int, int);
 
+bool tookMyMoney = false, specailTurn = false;
 
+int main(){
 
-  cout << "The Game Has Stated " << endl << "And The location of the exe file is:" << endl;
-  CreateFolder();
+//  cout << "The Game Has Stated " << endl << "And The location of the exe file is:" << endl;
+//  CreateFolder();
 
 //    string test;
 //    getline(cin, test);
 //    cout << test;
-  bool tookMyMoney = false, specailTurn = false;
   int attackMenu, choiceNum, buyMenu;
   int playerTurnNum;
   int insertedPlayers = 0;
   int numOfPlayers;
-  numOfPlayers = 2;
+//  numOfPlayers = atoi(argv[2])+atoi(argv[3]) + atoi(argv[4]);
+    numOfPlayers = 3;
   Hero *randomTurns[numOfPlayers];
   for (int i = 0; i < numOfPlayers; ++i) {
       randomTurns[i] = NULL;
     }
-  Thief gal;
-  Thief gal2;
-//    Necromancer noy;
+    Thief gal;
+    Thief gal2;
+    Necromancer noy;
 //    Necromancer noy2;
 //    Necromancer noy3;
 //    Warrior gal3;
@@ -72,10 +74,15 @@ int main() {
         }
     }
 
+    playerTurnNum = 0;
+    int deadCounter = 0, threefirstgames = 0;
 
-  playerTurnNum = 0;
-  cout << "Wellcome <userName" << endl;
-  while (1) {
+  while (deadCounter < numOfPlayers-1) {
+      if (randomTurns[playerTurnNum]->getHero().ifDie() && threefirstgames > 3*numOfPlayers) {
+          nextTurn(playerTurnNum, numOfPlayers);
+          break;
+      }
+      cout << "Wellcome " << randomTurns[playerTurnNum]->getName() << endl;
       // print menu
       cout << "What is your next step in the path to victory?\n";
       cout << "1. Attack\n";
@@ -98,16 +105,19 @@ int main() {
                 showAllHeros(randomTurns[playerTurnNum]->getHero());
               break;
               case 2:
-                if(randomTurns[playerTurnNum]->getHero().attackOpponent()) {
-                    if (playerTurnNum + 1 >= numOfPlayers) {
-                        playerTurnNum = 0;
-                      } else {
-                        playerTurnNum++;
-                      }
-                    tookMyMoney = false;
-                    specailTurn = false;
-                  }
+                  if(threefirstgames > 3*numOfPlayers) {
+                      if (randomTurns[playerTurnNum]->getHero().attackOpponent()) {
+                          if (playerTurnNum + 1 >= numOfPlayers) {
+                              playerTurnNum = 0;
+                          } else {
+                              playerTurnNum++;
+                          }
+                          tookMyMoney = false;
+                          specailTurn = false;
 
+                      }
+                      deadCounter++;
+                  }
               break;
               default:
                 cout << "please choose a valid number\n";
@@ -140,28 +150,35 @@ int main() {
                 specailTurn = true;
               }
           break;
+
           case 6:
-            if(playerTurnNum + 1 >= numOfPlayers)
-              {
-                playerTurnNum = 0;
-              } else
-              {
-                playerTurnNum++;
-              }
-          tookMyMoney = false;
-          specailTurn = false;
+              playerTurnNum = nextTurn(playerTurnNum,numOfPlayers);
           break;
+
           case 7:
             exit(0);
           default:
             cout << ("please choose a valid number\n");
         }
     }
+    cout << "The winner is " << randomTurns[playerTurnNum]->getName() << endl;
 
   int x; // for BreakPoint
   return 0;
 }
 
+int nextTurn(int playerTurnNum, int numOfPlayers){
+    if(playerTurnNum + 1 >= numOfPlayers)
+    {
+        playerTurnNum = 0;
+    } else
+    {
+        playerTurnNum++;
+    }
+    tookMyMoney = false;
+    specailTurn = false;
+    return playerTurnNum;
+}
 
 void showAllHeros(Hero& h1)
 {
@@ -207,7 +224,7 @@ void CreateFolder ()
   int check;
   char *dirName;
 
-  dirName = "./GamePlay";
+ // dirName = "./GamePlay";
   if (stat (dirName, &info) != 0)
     {
       // Folder does not exists
