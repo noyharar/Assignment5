@@ -29,7 +29,7 @@ int nextTurn(int, int);
 
 bool tookMyMoney = false, specailTurn = false;
 
-int main(){
+int main(int argc, char *argv[]) {
 
 //  cout << "The Game Has Stated " << endl << "And The location of the exe file is:" << endl;
 //  CreateFolder();
@@ -37,22 +37,46 @@ int main(){
 //    string test;
 //    getline(cin, test);
 //    cout << test;
-  int attackMenu, choiceNum, buyMenu;
-  int playerTurnNum;
-  int insertedPlayers = 0;
-  int numOfPlayers;
-//  numOfPlayers = atoi(argv[2])+atoi(argv[3]) + atoi(argv[4]);
-    numOfPlayers = 3;
-  Hero *randomTurns[numOfPlayers];
-  for (int i = 0; i < numOfPlayers; ++i) {
-      randomTurns[i] = NULL;
+    int attackMenu, choiceNum, buyMenu;
+    int playerTurnNum;
+    int insertedPlayers = 0;
+    string nameOfHero;
+    int numOfPlayers = atoi(argv[2]) + atoi(argv[3]) + atoi(argv[4]);
+    Hero *randomTurns[numOfPlayers];
+    for (int i = 0; i < numOfPlayers; ++i) {
+        randomTurns[i] = NULL;
     }
-    Thief gal;
-    Thief gal2;
-    Necromancer noy;
-//    Necromancer noy2;
-//    Necromancer noy3;
-//    Warrior gal3;
+
+    for (int i = 2; i < argc; i++) {
+        for (int j = 0; j < atoi(argv[i]); j++) {
+            if (i == 2) {
+                Hero *war = new Warrior();
+                Hero::allHeros[war->getName()] = war;
+            }
+            if (i == 3) {
+                Hero *thief = new Thief();
+                Hero::allHeros[thief->getName()] = thief;
+            }
+            if (i == 4) {
+                Hero *necromancer = new Necromancer();
+                Hero::allHeros[necromancer->getName()] = necromancer;
+            }
+        }
+    }
+
+    map<string, Hero *>::iterator it1;
+    it1 = Hero::allHeros.begin();
+    while (insertedPlayers < numOfPlayers && it1 != Hero::allHeros.end()) {
+        playerTurnNum = rand() % numOfPlayers;
+        if (randomTurns[playerTurnNum] == NULL) {
+            cout << it1->first << endl;
+            randomTurns[playerTurnNum] = &it1->second->getHero();
+            cout << randomTurns[playerTurnNum]->getName() << endl;
+            it1++;
+            insertedPlayers++;
+        }
+    }
+
 
 //TODO: Change rand() to random() as in the /**/
 /*
@@ -63,16 +87,7 @@ int main(){
       cout << rndom << endl;
     }
     */
-  map<string,Hero*>::iterator it1;
-  it1 = Hero::allHeros.begin();
-  while (insertedPlayers < numOfPlayers && it1 != Hero::allHeros.end()) {
-      playerTurnNum = rand() % numOfPlayers;
-      if (randomTurns[playerTurnNum] == NULL) {
-          randomTurns[playerTurnNum] = &it1->second->getHero();
-          it1++;
-          insertedPlayers++;
-        }
-    }
+
 
     playerTurnNum = 0;
     int deadCounter = 0, threefirstgames = 0;

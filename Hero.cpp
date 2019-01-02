@@ -30,7 +30,6 @@ Hero :: Hero(){
     strcpy(heroName,name);
     delete[] name;
     goldQty = 750;
-    allHeros[this->getName()] = this;
 
     Zombie* zombie = new Zombie();
     Wizard* wizard = new Wizard();
