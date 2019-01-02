@@ -1,6 +1,7 @@
 #include <limits>
 #include "Hero.h"
 #include <istream>
+#include "HeroesException.h"
 
 map<string,Hero*> Hero::allHeros;
 
@@ -21,13 +22,22 @@ CreatureData :: ~CreatureData() {}
 Hero :: Hero(){
     char* name = new char[31];
     heroName = new char[31];
-    cout << "Please enter a username:\n";
+
     cin >> name;
-    while(!legalName(name))
-    {
-        cout << "Please enter a username:\n";
-        cin >> name;
-    }
+    int length = strlen(name);
+    if(length >31){
+        throw IncorrectUsername(name);
+      }
+    for(int i = 0; i < strlen(name); i++){
+        if(!isalpha(name[i]) && !isdigit((int)name[i])){
+            throw IncorrectUsername(name);
+          }
+      }
+//    while(!legalName(name))
+//    {
+//        cout << "Please enter a username:\n";
+//        cin >> name;
+//    }
     strcpy(heroName,name);
     delete[] name;
     goldQty = 750;
@@ -191,7 +201,8 @@ void Hero :: helpToBuy(int index){
     cin >> wantToBuy;
     totalCost = wantToBuy*(creatureList[index].creature->getCost());
     if(totalCost > goldQty) {
-        cout << "You do not have enough gold\n";
+      double insGold = (double)totalCost;
+      throw InsufficientGold(insGold);
     }else{
         creatureList[index].numOfCreature += wantToBuy;
         goldQty -= totalCost;
@@ -264,17 +275,24 @@ bool Hero::attackOpponent()
     string  Op_Creature;
     Hero* AttackedOp = NULL;
     //check if the attacked name is available in the users names
-    while(AttackedOp == NULL){
-        cout << "Please insert your opponent name:" << endl;
-        string getHeroName;
-        cin >> getHeroName;
-        if(getHeroName == this->getName())
-            {
-                AttackedOp == NULL;
-            }else {
-            AttackedOp = searchHeroByName(getHeroName);
-            }
-        }
+    cout << "Please insert your opponent name:" << endl;
+    string getHeroName;
+    cin >> getHeroName;
+    AttackedOp = searchHeroByName(getHeroName);
+    if(AttackedOp == NULL)
+      throw HeroNotExists(getHeroName);
+
+//    while(AttackedOp == NULL){
+//        cout << "Please insert your opponent name:" << endl;
+//        string getHeroName;
+//        cin >> getHeroName;
+//        if(getHeroName == this->getName())
+//            {
+//                AttackedOp == NULL;
+//            }else {
+//                AttackedOp = searchHeroByName(getHeroName);
+//            }
+//        }
     //print my hero details
     this->printNameType();
     this->printCreatures();
@@ -286,54 +304,70 @@ bool Hero::attackOpponent()
     Hero* thisTurn = this;
 
     //fight until someone died
-    while(!thisTurn->ifDie() && !AttackedOp->ifDie()){
+    while(!thisTurn->ifDie() && !AttackedOp->ifDie())
+    {
         cout << thisTurn->getName() << "'s turn:" << endl;
         string myCreature, creatureFight;
         //check that the creatures are legal
         creatureFight, myCreature = "";
-        while(indexInList(myCreature) == -1 || indexInList(creatureFight) == -1)
+        do
         {
             cout << "<MY_Creature> <Op_Creature>" << endl;
             cin >> myCreature >> creatureFight;
         }
+        while(indexInList(myCreature) == -1 || indexInList(creatureFight) == -1);
+
         //check if the creatures are valid
-        if(thisTurn->isAvailableCreacure(myCreature) && AttackedOp->isAvailableCreacure(creatureFight))
+        try
         {
-          if((myCreature == "Zombie" && creatureFight == "Archer") || (myCreature == "Archer" && creatureFight == "Black_Dragon")){
-                thisTurn->creatureList[indexInList(myCreature)].creature->specialSkill();
-            }
-            if(myCreature == "Black_Dragon" && creatureFight == "Wizard"){
-                AttackedOp->creatureList[indexInList(creatureFight)].creature->specialSkill();
-            }
+            if (thisTurn->isAvailableCreacure (myCreature) && AttackedOp->isAvailableCreacure (creatureFight))
+            {
+                if ((myCreature == "Zombie" && creatureFight == "Archer")
+                    || (myCreature == "Archer" && creatureFight == "Black_Dragon"))
+                {
+                    thisTurn->creatureList[indexInList (myCreature)].creature->specialSkill ();
+                }
+                if (myCreature == "Black_Dragon" && creatureFight == "Wizard")
+                {
+                    AttackedOp->creatureList[indexInList (creatureFight)].creature->specialSkill ();
+                }
 
-          //  CreatureData currentAttackedCreature = AttackedOp->creatureList[indexInList(creatureFight)];
-            CreatureData thisCreature = thisTurn->creatureList[indexInList(myCreature)];
-            numOfThisTurn = thisCreature.numOfCreature;
-            powerOfThisTurn = thisCreature.creature->getPower();
-         //   defenseOfAttackedOp = currentAttackedCreature.creature->getDefense();
-            defenseOfAttackedOp = AttackedOp->creatureList[indexInList(creatureFight)].creature->getDefense();
+                //  CreatureData currentAttackedCreature = AttackedOp->creatureList[indexInList(creatureFight)];
+                CreatureData thisCreature = thisTurn->creatureList[indexInList (myCreature)];
+                numOfThisTurn = thisCreature.numOfCreature;
+                powerOfThisTurn = thisCreature.creature->getPower ();
+                //   defenseOfAttackedOp = currentAttackedCreature.creature->getDefense();
+                defenseOfAttackedOp = AttackedOp->creatureList[indexInList (creatureFight)].creature->getDefense ();
 
-            //check and update how many creatures have been died
-           // currentAttackedCreature.numOfCreature -= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;no
-            howManyCan= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;
-            if(AttackedOp->creatureList[indexInList(creatureFight)].numOfCreature <= howManyCan){
-                AttackedOp->creatureList[indexInList(creatureFight)].numOfCreature = 0;
-            }else{
-                AttackedOp->creatureList[indexInList(creatureFight)].numOfCreature -= howManyCan;
+                //check and update how many creatures have been died
+                // currentAttackedCreature.numOfCreature -= (numOfThisTurn*powerOfThisTurn)/defenseOfAttackedOp;no
+                howManyCan = (numOfThisTurn * powerOfThisTurn) / defenseOfAttackedOp;
+                if (AttackedOp->creatureList[indexInList (creatureFight)].numOfCreature <= howManyCan)
+                {
+                    AttackedOp->creatureList[indexInList (creatureFight)].numOfCreature = 0;
+                }
+                else
+                {
+                    AttackedOp->creatureList[indexInList (creatureFight)].numOfCreature -= howManyCan;
+                }
+
+                if (!thisTurn->ifDie () && !AttackedOp->ifDie ())
+                {
+                    thisTurn = AttackedOp;
+                    AttackedOp = this;
+                    //print the updated details
+                    thisTurn->printNameType ();
+                    thisTurn->printCreatures ();
+                    cout << endl;
+                    AttackedOp->printNameType ();
+                    AttackedOp->printCreatures ();
+                    cout << endl;
+                }
             }
-
-        if(!thisTurn->ifDie() && !AttackedOp->ifDie())
+        }
+        catch (HeroesException& e)
         {
-            thisTurn = AttackedOp;
-            AttackedOp = this;
-            //print the updated details
-            thisTurn->printNameType();
-            thisTurn->printCreatures();
-            cout << endl;
-            AttackedOp->printNameType();
-            AttackedOp->printCreatures();
-            cout << endl;
-          }
+            e.Handle ();
         }
     }
     //if someone died - no creatures
@@ -373,7 +407,7 @@ int Hero :: indexInList(string creatureName){
     else if(creatureName == "Zombie") {
         return  4;
     }
-    return -1;
+    throw IncorrectAttack(creatureName);
 }
 
 /**
@@ -400,10 +434,19 @@ bool Hero :: ifDie(){
  * @return true if the Hero has more Creature of type creatureName
  */
 bool Hero :: isAvailableCreacure(string creatureName){
-    int index = indexInList(creatureName);
+    try
+    {
 
-    if (creatureList[index].numOfCreature > 0) {
-        return true;
+        int index = indexInList (creatureName);
+
+        if (creatureList[index].numOfCreature > 0)
+        {
+            return true;
+        }
+            return false;
     }
-        return false;
+    catch (HeroesException& e)
+    {
+        throw;
+    }
 }

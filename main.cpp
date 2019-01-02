@@ -13,6 +13,7 @@
 #include "Thief.h"
 #include "Necromancer.h"
 #include "Black_Dragon.h"
+#include "HeroesException.h"
 
 
 
@@ -28,6 +29,7 @@ void showAllHeros(Hero& h1);
 int nextTurn(int, int);
 
 bool tookMyMoney = false, specailTurn = false;
+int threefirstgames = 0;
 
 int main(int argc, char *argv[]) {
 
@@ -50,16 +52,45 @@ int main(int argc, char *argv[]) {
     for (int i = 2; i < argc; i++) {
         for (int j = 0; j < atoi(argv[i]); j++) {
             if (i == 2) {
-                Hero *war = new Warrior();
-                Hero::allHeros[war->getName()] = war;
+                cout << "Please insert warrior number " << j+1 << " name:" << endl;
+                try
+                {
+                    Hero *war = new Warrior();
+                    Hero::allHeros[war->getName()] = war;
+                }
+                catch (HeroesException& e)
+                {
+                    e.Handle ();
+                    j--;
+                }
+
+
             }
-            if (i == 3) {
-                Hero *thief = new Thief();
-                Hero::allHeros[thief->getName()] = thief;
+            else if (i == 3) {
+                cout << "Please insert thief number " << j+1 << " name:" << endl;
+                try
+                {
+                  Hero *thief = new Thief ();
+                  Hero::allHeros[thief->getName ()] = thief;
+                }
+                catch (HeroesException& e)
+                {
+                  e.Handle ();
+                  j--;
+                }
             }
-            if (i == 4) {
-                Hero *necromancer = new Necromancer();
-                Hero::allHeros[necromancer->getName()] = necromancer;
+            else if (i == 4) {
+                cout << "Please insert necromancer number " << j+1 << " name:" << endl;
+                try
+                {
+                  Hero *necromancer = new Necromancer ();
+                  Hero::allHeros[necromancer->getName ()] = necromancer;
+                }
+                catch (HeroesException& e)
+                {
+                  e.Handle ();
+                  j--;
+                }
             }
         }
     }
@@ -69,9 +100,9 @@ int main(int argc, char *argv[]) {
     while (insertedPlayers < numOfPlayers && it1 != Hero::allHeros.end()) {
         playerTurnNum = rand() % numOfPlayers;
         if (randomTurns[playerTurnNum] == NULL) {
-            cout << it1->first << endl;
+//            cout << it1->first << endl;
             randomTurns[playerTurnNum] = &it1->second->getHero();
-            cout << randomTurns[playerTurnNum]->getName() << endl;
+//            cout << randomTurns[playerTurnNum]->getName() << endl;
             it1++;
             insertedPlayers++;
         }
@@ -90,14 +121,16 @@ int main(int argc, char *argv[]) {
 
 
     playerTurnNum = 0;
-    int deadCounter = 0, threefirstgames = 0;
+    int deadCounter = 0;
 
   while (deadCounter < numOfPlayers-1) {
-      if (randomTurns[playerTurnNum]->getHero().ifDie() && threefirstgames > 3*numOfPlayers) {
+      if (randomTurns[playerTurnNum]->getHero().ifDie() && threefirstgames > 3*numOfPlayers && deadCounter >= numOfPlayers -1) {
           nextTurn(playerTurnNum, numOfPlayers);
           break;
       }
-      cout << "Wellcome " << randomTurns[playerTurnNum]->getName() << endl;
+      char* currentPlayerName = randomTurns[playerTurnNum]->getName();
+      cout << "Wellcome " << currentPlayerName << endl;
+      delete[]currentPlayerName;
       // print menu
       cout << "What is your next step in the path to victory?\n";
       cout << "1. Attack\n";
@@ -120,19 +153,26 @@ int main(int argc, char *argv[]) {
                 showAllHeros(randomTurns[playerTurnNum]->getHero());
               break;
               case 2:
-                  if(threefirstgames > 3*numOfPlayers) {
-                      if (randomTurns[playerTurnNum]->getHero().attackOpponent()) {
-                          if (playerTurnNum + 1 >= numOfPlayers) {
-                              playerTurnNum = 0;
-                          } else {
-                              playerTurnNum++;
-                          }
-                          tookMyMoney = false;
-                          specailTurn = false;
+                try
+                  {
+                    if (threefirstgames > 3 * numOfPlayers)
+                      {
+                        if (randomTurns[playerTurnNum]->getHero ().attackOpponent ())
+                          {
+                            playerTurnNum = nextTurn (playerTurnNum, numOfPlayers);
 
+                          }
+                        deadCounter++;
                       }
-                      deadCounter++;
+                    else
+                      {
+                          throw MustWaitThreeTurns();
+                      }
                   }
+                  catch (HeroesException& e)
+                    {
+                      e.Handle ();
+                    }
               break;
               default:
                 cout << "please choose a valid number\n";
@@ -146,7 +186,12 @@ int main(int argc, char *argv[]) {
               }
           break;
           case 3:
-            randomTurns[playerTurnNum]->buyCreatures();
+            try{
+              randomTurns[playerTurnNum]->buyCreatures();
+            }
+            catch (HeroesException& e){
+              e.Handle ();
+            }
           break;
           case 4:
             randomTurns[playerTurnNum]->heroDetails();
@@ -168,6 +213,7 @@ int main(int argc, char *argv[]) {
 
           case 6:
               playerTurnNum = nextTurn(playerTurnNum,numOfPlayers);
+
           break;
 
           case 7:
@@ -192,6 +238,7 @@ int nextTurn(int playerTurnNum, int numOfPlayers){
     }
     tookMyMoney = false;
     specailTurn = false;
+    threefirstgames++;
     return playerTurnNum;
 }
 
