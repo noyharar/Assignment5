@@ -27,12 +27,12 @@ Hero :: Hero(){
     int length = strlen(name);
     if(length >31){
         throw IncorrectUsername(name);
-      }
+    }
     for(int i = 0; i < strlen(name); i++){
         if(!isalpha(name[i]) && !isdigit((int)name[i])){
             throw IncorrectUsername(name);
-          }
-      }
+        }
+    }
 //    while(!legalName(name))
 //    {
 //        cout << "Please enter a username:\n";
@@ -201,8 +201,8 @@ void Hero :: helpToBuy(int index){
     cin >> wantToBuy;
     totalCost = wantToBuy*(creatureList[index].creature->getCost());
     if(totalCost > goldQty) {
-      double insGold = (double)totalCost;
-      throw InsufficientGold(insGold);
+        double insGold = (double)totalCost;
+        throw InsufficientGold(insGold);
     }else{
         creatureList[index].numOfCreature += wantToBuy;
         goldQty -= totalCost;
@@ -217,11 +217,11 @@ void Hero :: printCreatures()const{
     string printStr;
     for(int i = 0 ; i < 5 ; i++) {
         if (creatureList[i].numOfCreature > 0) {
-       //     if (i < 4) {
-                printStr = printStr + to_string(creatureList[i].numOfCreature) + " " + creatureList[i].creName +" ";
+            //     if (i < 4) {
+            printStr = printStr + to_string(creatureList[i].numOfCreature) + " " + creatureList[i].creName +" ";
         }
     }
-        cout << printStr.substr(0, printStr.length() - 1);
+    cout << printStr.substr(0, printStr.length() - 1);
 
 }
 
@@ -280,7 +280,7 @@ bool Hero::attackOpponent()
     cin >> getHeroName;
     AttackedOp = searchHeroByName(getHeroName);
     if(AttackedOp == NULL)
-      throw HeroNotExists(getHeroName);
+        throw HeroNotExists(getHeroName);
 
 //    while(AttackedOp == NULL){
 //        cout << "Please insert your opponent name:" << endl;
@@ -310,20 +310,20 @@ bool Hero::attackOpponent()
         string myCreature, creatureFight;
         //check that the creatures are legal
         creatureFight, myCreature = "";
-        do
-        {
-            cout << "<MY_Creature> <Op_Creature>" << endl;
-            cin >> myCreature >> creatureFight;
-        }
-        while(indexInList(myCreature) == -1 || indexInList(creatureFight) == -1);
-
         //check if the creatures are valid
         try
         {
+//            do
+//            {
+//            }
+//            while(indexInList(myCreature) == -1 || indexInList(creatureFight) == -1);
+            cout << "<MY_Creature> <Op_Creature>" << endl;
+            cin >> myCreature >> creatureFight;
+
             if (thisTurn->isAvailableCreacure (myCreature) && AttackedOp->isAvailableCreacure (creatureFight))
             {
                 if ((myCreature == "Zombie" && creatureFight == "Archer")
-                    || (myCreature == "Archer" && creatureFight == "Black_Dragon"))
+                        || (myCreature == "Archer" && creatureFight == "Black_Dragon"))
                 {
                     thisTurn->creatureList[indexInList (myCreature)].creature->specialSkill ();
                 }
@@ -351,8 +351,12 @@ bool Hero::attackOpponent()
                     AttackedOp->creatureList[indexInList (creatureFight)].numOfCreature -= howManyCan;
                 }
 
+                thisTurn->creatureList[indexInList(myCreature)].creature->revertSpecialSkill();
+                AttackedOp->creatureList[indexInList(creatureFight)].creature->revertSpecialSkill();
+
                 if (!thisTurn->ifDie () && !AttackedOp->ifDie ())
                 {
+
                     thisTurn = AttackedOp;
                     AttackedOp = this;
                     //print the updated details
@@ -419,7 +423,7 @@ int Hero :: indexInList(string creatureName){
 bool Hero :: ifDie(){
     int sum = 0;
     for(int i = 0; i < 5 ; i++) {
-       sum += creatureList[i].numOfCreature;
+        sum += creatureList[i].numOfCreature;
     }
     if (sum == 0){
         return true;
@@ -443,10 +447,10 @@ bool Hero :: isAvailableCreacure(string creatureName){
         {
             return true;
         }
-            return false;
+        throw IncorrectAttack(creatureName);
     }
-    catch (HeroesException& e)
+    catch (IncorrectAttack& e)
     {
-        throw;
+        throw e;
     }
 }

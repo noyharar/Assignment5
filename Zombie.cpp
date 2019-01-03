@@ -28,6 +28,11 @@ void Zombie :: specialSkill(){
     power *= 2;
 }
 
+void Zombie ::revertSpecialSkill()
+{
+    power /= 2;
+}
+
 //void Zombie::Attack(Creature *attackedCreature) const
 //{
 //

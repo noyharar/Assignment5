@@ -31,3 +31,8 @@ void Vampire :: specialSkill(){
     cout << "no special skil\n";
 }
 
+void Vampire::revertSpecialSkill()
+{
+    return;
+}
+

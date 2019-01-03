@@ -7,11 +7,12 @@ class Zombie : public Creature {
 
  public:
     Zombie();
-    ~Zombie();
-    double getPower()const override;
-    int getDefense()const override;
-    int getCost()const override;
-    void specialSkill();
+    virtual ~Zombie();
+    virtual double getPower()const override;
+    virtual int getDefense()const override;
+    virtual int getCost()const override;
+    virtual void specialSkill();
+    virtual void revertSpecialSkill();
 //    void Attack(Creature* attackedCreature)const override;
 
 };

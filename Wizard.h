@@ -10,11 +10,12 @@ class Wizard : public Creature{
  public:
     Wizard();
     ~Wizard();
-    double getPower()const override;
-    int getDefense()const override;
-    void specialSkill();
-//    void Attack(Creature* attackedCreature)const;
-    int getCost()const override;
+    virtual double getPower()const override;
+    virtual int getDefense()const override;
+    virtual int getCost()const override;
+    virtual void specialSkill();
+    virtual void revertSpecialSkill();
+
 };
 
 

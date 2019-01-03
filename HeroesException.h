@@ -38,7 +38,7 @@ class IncorrectAttack:public HeroesException
  public:
   IncorrectAttack():HeroesException() {};
   IncorrectAttack(string creatureName):HeroesException(), attackedCreature(creatureName) {};
-  virtual void Handle()const { cout << "This Creature '" << attackedCreature << "' Does Not Exists Please Try Again" << endl; }
+  virtual void Handle()const { cout << "The Creature '" << attackedCreature << "' Does Not Exists among the User's Creatures Please Try Again" << endl; }
 };
 
 class HeroNotExists:public HeroesException

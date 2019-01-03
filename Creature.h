@@ -24,6 +24,7 @@ class Creature
     virtual int getDefense()const=0;
     virtual int getCost()const=0;
     virtual void specialSkill()=0;
+    virtual void revertSpecialSkill()=0;
     void printCreature();
 };
 

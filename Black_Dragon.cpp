@@ -25,7 +25,11 @@ int Black_Dragon :: getCost()const
 }
 
 void Black_Dragon :: specialSkill(){
-    cout << "no special skil\n";
+    return;
 }
 
+void Black_Dragon::revertSpecialSkill()
+{
+    return;
+}
 //void Black_Dragon::Attack(Creature *attackedCreature) const{}

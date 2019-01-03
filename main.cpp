@@ -151,11 +151,15 @@ int main(int argc, char *argv[]) {
           switch (attackMenu) {
               case 1:
                 showAllHeros(randomTurns[playerTurnNum]->getHero());
+                cin.get();
+                cin.get();
               break;
               case 2:
                 try
                   {
-                    if (threefirstgames > 3 * numOfPlayers)
+                    //if (threefirstgames > 3 * numOfPlayers)
+                    //TODO: Only for Debug
+                    if(threefirstgames >= 0)
                       {
                         if (randomTurns[playerTurnNum]->getHero ().attackOpponent ())
                           {

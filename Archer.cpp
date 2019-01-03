@@ -28,4 +28,9 @@ void Archer :: specialSkill(){
     power *= 1.2;
 }
 
+void Archer::revertSpecialSkill()
+{
+    power /= 1.2;
+}
+
 //void Archer :: Attack(Creature *attackedCreature) const{}

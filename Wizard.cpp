@@ -30,5 +30,10 @@ void Wizard :: specialSkill(){
     defense *= 2;
 }
 
+void Wizard::revertSpecialSkill()
+{
+    defense /= 2;
+}
+
 //void Wizard::Attack(Creature *attackedCreature) const {}
 
