@@ -270,16 +270,16 @@ void Hero::printNameType()const
 
 bool Hero::attackOpponent()
 {
-    bool next = false;
+    bool flipTurn = false, thisTurnSpecial = false, AttackedOpSpecial = false;
     int numOfThisTurn,powerOfThisTurn, defenseOfAttackedOp,howManyCan;
     string  Op_Creature;
-    Hero* AttackedOp = NULL;
+    Hero* AttackedOp = NULL, *currentAttacker = this, *currentDefender = NULL;
     //check if the attacked name is available in the users names
     cout << "Please insert your opponent name:" << endl;
     string getHeroName;
     cin >> getHeroName;
-    AttackedOp = searchHeroByName(getHeroName);
-    if(AttackedOp == NULL)
+    currentDefender = searchHeroByName(getHeroName);
+    if(currentDefender == NULL)
         throw HeroNotExists(getHeroName);
 
 //    while(AttackedOp == NULL){
@@ -297,11 +297,12 @@ bool Hero::attackOpponent()
     this->printNameType();
     this->printCreatures();
     cout << endl;
-    AttackedOp->printNameType();
-    AttackedOp->printCreatures();
+    currentDefender->printNameType();
+    currentDefender->printCreatures();
     cout << endl;
 
-    Hero* thisTurn = this;
+    Hero* thisTurn = currentAttacker;
+    AttackedOp = currentDefender;
 
     //fight until someone died
     while(!thisTurn->ifDie() && !AttackedOp->ifDie())
@@ -326,10 +327,12 @@ bool Hero::attackOpponent()
                         || (myCreature == "Archer" && creatureFight == "Black_Dragon"))
                 {
                     thisTurn->creatureList[indexInList (myCreature)].creature->specialSkill ();
+                    thisTurnSpecial = true;
                 }
                 if (myCreature == "Black_Dragon" && creatureFight == "Wizard")
                 {
                     AttackedOp->creatureList[indexInList (creatureFight)].creature->specialSkill ();
+                    AttackedOpSpecial = true;
                 }
 
                 //  CreatureData currentAttackedCreature = AttackedOp->creatureList[indexInList(creatureFight)];
@@ -351,14 +354,30 @@ bool Hero::attackOpponent()
                     AttackedOp->creatureList[indexInList (creatureFight)].numOfCreature -= howManyCan;
                 }
 
-                thisTurn->creatureList[indexInList(myCreature)].creature->revertSpecialSkill();
-                AttackedOp->creatureList[indexInList(creatureFight)].creature->revertSpecialSkill();
+                if(thisTurnSpecial)
+                {
+                    //if this turn creature used its special skill
+                    thisTurn->creatureList[indexInList(myCreature)].creature->revertSpecialSkill();
+                }
+
+                if(AttackedOpSpecial)
+                {
+                    //if the attacked creature used its special skill
+                    AttackedOp->creatureList[indexInList(creatureFight)].creature->revertSpecialSkill();
+                }
 
                 if (!thisTurn->ifDie () && !AttackedOp->ifDie ())
                 {
-
-                    thisTurn = AttackedOp;
-                    AttackedOp = this;
+                    if(!flipTurn)
+                    {
+                        thisTurn = currentDefender;
+                        AttackedOp = currentAttacker;
+                    } else
+                    {
+                        thisTurn = currentAttacker;
+                        AttackedOp = currentDefender;
+                    }
+                    flipTurn = !flipTurn;
                     //print the updated details
                     thisTurn->printNameType ();
                     thisTurn->printCreatures ();
