@@ -146,8 +146,8 @@ int main(int argc, char *argv[]) {
       switch (choiceNum) {
           case 1:
             cout << "1. Show me my opponents\n";
-          cout << "2. Attack hero\n";
-          cin >> attackMenu;
+            cout << "2. Attack hero\n";
+            cin >> attackMenu;
           switch (attackMenu) {
               case 1:
                 showAllHeros(randomTurns[playerTurnNum]->getHero());
