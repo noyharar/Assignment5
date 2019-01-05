@@ -124,10 +124,9 @@ int main(int argc, char *argv[]) {
     int deadCounter = 0;
 
   while (deadCounter < numOfPlayers-1) {
-      if (randomTurns[playerTurnNum]->getHero().ifDie() && threefirstgames > 3*numOfPlayers && deadCounter >= numOfPlayers -1) {
-          nextTurn(playerTurnNum, numOfPlayers);
-          break;
-      }
+          if (randomTurns[playerTurnNum]->getHero().ifDie() && threefirstgames > 3*numOfPlayers) { //&& deadCounter >= numOfPlayers -1) {
+              playerTurnNum = nextTurn(playerTurnNum, numOfPlayers);
+          }
       char* currentPlayerName = randomTurns[playerTurnNum]->getName();
       cout << "Wellcome " << currentPlayerName << endl;
       delete[]currentPlayerName;
@@ -157,16 +156,17 @@ int main(int argc, char *argv[]) {
               case 2:
                 try
                   {
-                    //if (threefirstgames > 3 * numOfPlayers)
+                    if (threefirstgames > 3 * numOfPlayers){
                     //TODO: Only for Debug
-                    if(threefirstgames >= 0)
-                      {
+//                    if(threefirstgames >= 0)
+//                      {
                         if (randomTurns[playerTurnNum]->getHero ().attackOpponent ())
                           {
                             playerTurnNum = nextTurn (playerTurnNum, numOfPlayers);
 
                           }
                         deadCounter++;
+                        threefirstgames++;
                       }
                     else
                       {
@@ -217,7 +217,7 @@ int main(int argc, char *argv[]) {
 
           case 6:
               playerTurnNum = nextTurn(playerTurnNum,numOfPlayers);
-
+              threefirstgames++;
           break;
 
           case 7:
