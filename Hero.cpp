@@ -101,6 +101,15 @@ void Hero::heroDetails()
     }
 }
 
+string Hero:: detailsForGame(){
+    string details = "";
+    details = type + " " + heroName + " " + to_string(goldQty)+ " ";
+    for(int i = 0; i < 5; i++){
+        details = details + to_string(creatureList[i].numOfCreature) + " " + creatureList[i].creName +" ";
+    }
+    return details;
+}
+
 /// Increases the number of gold of the Hero by amount
 /// Max value of gold after increase is 2500
 /// \param amount - how much gold to increase

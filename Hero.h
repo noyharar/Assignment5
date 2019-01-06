@@ -14,7 +14,7 @@ class CreatureData;
 
 class Hero{
 public:
-    char* heroName;
+    char *heroName;
     int goldQty;//between 0-2500
     CreatureData* creatureList;
     string type;
@@ -22,7 +22,6 @@ public:
     static map<string,Hero*> allHeros;
 
 //public:
-
     Hero();
     ~Hero();
 
@@ -39,7 +38,7 @@ public:
     bool isAvailableCreacure(string);
     void printNameType()const;
     int indexInList(string);
-
+    string detailsForGame();
 
 
 
