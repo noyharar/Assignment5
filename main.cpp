@@ -385,7 +385,10 @@ void showAllHeros(Hero& h1)
     {
       if(!(h1.getName() == it1->first)&& it1->second->getType() == "Warrior")
         {
-          it1->second->printNameType();
+          if(!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
+            {
+              it1->second->printNameType();
+            }
         }
       it1++;
     }
@@ -394,8 +397,10 @@ void showAllHeros(Hero& h1)
     {
       if(!(h1.getName() == it1->first)&& it1->second->getType() == "Thief")
         {
-          it1->second->printNameType();
-        }
+          if(!it1->second->ifDie () || threefirstgames < 3*numOfPlayers)
+            {
+              it1->second->printNameType();
+            }        }
       it1++;
     }
   it1 = Hero::allHeros.begin();
@@ -403,8 +408,10 @@ void showAllHeros(Hero& h1)
     {
       if(!(h1.getName() == it1->first)&& it1->second->getType() == "Necromancer")
         {
-          it1->second->printNameType();
-        }
+          if(!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
+            {
+              it1->second->printNameType();
+            }        }
       it1++;
     }
 }
