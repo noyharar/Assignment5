@@ -32,4 +32,5 @@ string Necromancer::getType() const
 void Necromancer::specialSkill()
 {
     creatureList[4].numOfCreature++;
+    cout << "Zombie added successfully" << endl;
 }

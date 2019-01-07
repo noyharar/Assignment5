@@ -83,10 +83,11 @@ int Hero::getGold() const
 /// Print the Hero Details
 void Hero::heroDetails()
 {
-    cout << getName() << " " << getTypeForPrint() + ":\n" << getGold() << " gold\n";;
+    cout << getName() << " " << getTypeForPrint() + ":\n" << getGold() << " gold\n";
     printCreatures();
+
     if(!ifDie()) {
-        cout << ".\n";
+        cout << endl;
     }
 }
 

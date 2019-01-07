@@ -21,6 +21,7 @@ string Warrior::getType()const
 void Warrior::specialSkill()
 {
     this->increaseGold(50);
+    cout << "Gold added successfully" << endl;
 }
 
 

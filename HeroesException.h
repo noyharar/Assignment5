@@ -50,11 +50,6 @@ class HeroNotExists:public HeroesException
   virtual void Handle()const { cout << "The Hero '" << searchedHero << "' does not exists" << endl; }
 };
 
-//class MustWaitThreeTurns:public HeroesException
-//{
-// public:
-//  MustWaitThreeTurns():HeroesException() {};
-//  virtual void Handle()const { cout << "Cannot Attack before Everyone played 3 Turns" << endl; }
-//};
+
 
 #endif //ASSIGNMENT5_HEROESEXCEPTION_H

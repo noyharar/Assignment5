@@ -152,7 +152,7 @@ int main(int argc, char *argv[]) {
 
     }
     else {
-       createLastGame("test2.txt");
+       createLastGame("game/game.txt");
        if(randomTurns == NULL)
          {
            return 0;
@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
       cout << "2. Get daily gold\n";
       cout << "3. Buy creatures\n";
       cout << "4. Show details\n";
-      cout << "5. Spacial skill\n";
+      cout << "5. Special skill\n";
       cout << "6. End of my turn\n";
       cout << "7. Exit\n";
       // get input from user
@@ -267,6 +267,10 @@ int main(int argc, char *argv[]) {
                 randomTurns[playerTurnNum]->specialSkill();
                 specailTurn = true;
               }
+            else
+              {
+                cout << "You cannot use your special skill twice" << endl;
+              }
           break;
 
           case 6:
@@ -276,7 +280,7 @@ int main(int argc, char *argv[]) {
 
           case 7:
               //Delete map
-              randomTurns[playerTurnNum]->deleteDataFromMap();
+//              randomTurns[playerTurnNum]->deleteDataFromMap();
               gameFolder = "./game";
               if(!myCreateFolder (gameFolder))
                 {
@@ -300,6 +304,26 @@ int main(int argc, char *argv[]) {
         }
     }
     cout << "The winner is " << randomTurns[playerTurnNum]->getName() << endl;
+
+//    randomTurns[playerTurnNum]->deleteDataFromMap();
+    gameFolder = "./game";
+    if(!myCreateFolder (gameFolder))
+      {
+        //                  exit(0);
+      }
+    heroesFolder = "./Heroes";
+    heroNameFolder = "";
+    if(myCreateFolder (heroesFolder))
+      {
+        for (int i = 0; i < numOfPlayers; ++i)
+          {
+            heroNameFolder = heroesFolder + "/" + randomTurns[i]->getName ();
+            myCreateFolder (heroNameFolder);
+          }
+
+      }
+    writeTheLastGame(playerTurnNum,randomTurns,gameFolder,heroesFolder);
+
 
   int x; // for BreakPoint
   return 0;
@@ -457,6 +481,9 @@ void writeTheLastGame(int indexOfPlayer,Hero **randomArray, string& gameFolder, 
     {
       outfile << randomArray[j]->getHero().detailsForGame() + "\n";
     }
+    string chmodCmd = "chmod 777 " + gameFolder + "/game.txt";
+
+    system(chmodCmd.c_str ());
     outfile.close ();
 
     for(int i = 0; i < numOfPlayers; i++){
@@ -526,7 +553,6 @@ void createLastGame(string fileName){
                 ssin >> arr[i];
                 ++i;
             }
-            name = strcpy(new char[arr[1].length()+1],arr[1].c_str());
             if (arr[0] == "Warrior") {
                 Hero* current;
                 Hero *war = new Warrior(arr[1]);
@@ -556,7 +582,6 @@ void createLastGame(string fileName){
             }
         }
         myfile.close();
-        cout << "Fuckkkkk" <<endl;
 //        return *currentRandom;
     }
 
