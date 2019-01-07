@@ -159,11 +159,11 @@ void Hero::decreaseGold(int amount)
 void Hero::buyCreatures() {
     int buyMenu;
     cout << "Buy creatures:\n";
-    cout << "1. Buy zombies\n";
-    cout << "2. Buy Archers\n";
-    cout << "3. Buy Vampire\n";
-    cout << "4. Buy Wizard\n";
-    cout << "5. Buy Black Dragon\n";
+    cout << "1. Buy Zombie.\n";
+    cout << "2. Buy Archer.\n";
+    cout << "3. Buy Vampire.\n";
+    cout << "4. Buy Wizard.\n";
+    cout << "5. Buy Black Dragon.\n";
     cin >> buyMenu;
     switch (buyMenu) {
         case 1:
@@ -192,7 +192,7 @@ void Hero :: helpToBuy(int index){
     int wantToBuy = 0;
     int totalCost = 0;
     creatureList[index].creature->showDetails();
-    cout << "Please Enter how many creatures you want to buy:\n";
+//    cout << "Please Enter how many creatures you want to buy:\n";
     cin >> wantToBuy;
     totalCost = wantToBuy*(creatureList[index].creature->getCost());
     if(totalCost > goldQty) {
@@ -321,7 +321,7 @@ bool Hero::attackOpponent()
 //            {
 //            }
 //            while(indexInList(myCreature) == -1 || indexInList(creatureFight) == -1);
-            cout << "<MY_Creature> <Op_Creature>" << endl;
+//            cout << "<MY_Creature> <Op_Creature>" << endl;
             cin >> myCreature >> creatureFight;
 
             if (thisTurn->isAvailableCreacure (myCreature) && AttackedOp->isAvailableCreacure (creatureFight))
@@ -401,6 +401,7 @@ bool Hero::attackOpponent()
         cout << "You have been perished\n";
         return true;
     }else {
+        this->increaseGold (currentDefender->getGold ());
         cout << "You have been victorious\n";
         return false;
     }

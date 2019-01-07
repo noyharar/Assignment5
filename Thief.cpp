@@ -1,3 +1,4 @@
+#include <limits>
 #include "Thief.h"
 
 Thief:: Thief(string iHeroName):Hero(iHeroName)
@@ -29,10 +30,11 @@ void Thief::specialSkill()
 {
     int theAmountToSteal = 70;
     cout << "Please insert hero name:" << endl;
-    string getHeroName;
-    cin >> getHeroName;
+    string getHeroName = "";
+    cin.ignore ();
+    getline (cin, getHeroName);
     Hero* stealFromHim = searchHeroByName(getHeroName);
-    if (stealFromHim)
+    if (stealFromHim != NULL)
     {
         Hero& refToSteal = *stealFromHim;
         specialSkilled(refToSteal);

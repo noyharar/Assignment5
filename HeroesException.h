@@ -22,7 +22,7 @@ class IncorrectUsername:public HeroesException
   IncorrectUsername(string name):HeroesException(),username(name){};
   virtual void Handle()const { cout << "Please Enter a valid username instead of: " << username << endl; }
 };
-
+//
 class InsufficientGold:public HeroesException
 {
   double insGold;
@@ -31,7 +31,7 @@ class InsufficientGold:public HeroesException
   InsufficientGold(double goldUsed):HeroesException(),insGold(goldUsed) {};
   virtual void Handle()const { cout << "Insufficient Gold to buy this Creatues in " << insGold << " Gold" << endl; }
 };
-
+//
 class IncorrectAttack:public HeroesException
 {
   string attackedCreature;
@@ -50,11 +50,11 @@ class HeroNotExists:public HeroesException
   virtual void Handle()const { cout << "The Hero '" << searchedHero << "' does not exists" << endl; }
 };
 
-class MustWaitThreeTurns:public HeroesException
-{
- public:
-  MustWaitThreeTurns():HeroesException() {};
-  virtual void Handle()const { cout << "Cannot Attack before Everyone played 3 Turns" << endl; }
-};
+//class MustWaitThreeTurns:public HeroesException
+//{
+// public:
+//  MustWaitThreeTurns():HeroesException() {};
+//  virtual void Handle()const { cout << "Cannot Attack before Everyone played 3 Turns" << endl; }
+//};
 
 #endif //ASSIGNMENT5_HEROESEXCEPTION_H

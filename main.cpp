@@ -23,30 +23,38 @@ struct stat info; // Used to check whether or not folder/file is exists
 
 std::string exec(const char* cmd);
 
-void CreateFolder();
+bool myCreateFolder (string&);
 
 void showAllHeros(Hero& h1);
 string getNameFromUser();
 int nextTurn(int, int);
 
-void writeTheLastGame(int,int, Hero**);
+void writeTheLastGame(int, Hero**, string&, string&);
 
-Hero* createLastGame(string);
+void createLastGame(string);
 
 bool tookMyMoney = false, specailTurn = false;
 int threefirstgames = 0;
 int playerTurnNum = 0 ;
 int numOfPlayers = 0;
+int deadCounter = 0;
+Hero **randomTurns;
 
 int main(int argc, char *argv[]) {
 
 //  cout << "The Game Has Stated " << endl << "And The location of the exe file is:" << endl;
-//  CreateFolder();
+//  myCreateFolder();
     int attackMenu, choiceNum ;
     int insertedPlayers = 0;
-    int deadCounter = 0;
+    randomTurns = NULL;
     string nameOfHero;
-    Hero **randomTurns;
+    string gameFolder;
+    string heroesFolder;
+    string heroNameFolder;
+    string stam;
+
+
+
 
 
 
@@ -55,69 +63,112 @@ int main(int argc, char *argv[]) {
         /**
        *receive num of heroes and create them
        */
-        numOfPlayers = atoi(argv[2]) + atoi(argv[3]) + atoi(argv[4]);
-        Hero *randomTurns[numOfPlayers];
-        for (int i = 0; i < numOfPlayers; ++i) {
-            randomTurns[i] = NULL;
-        }
-       string userName = "";
-        for (int i = 2; i < argc; i++) {
-            for (int j = 0; j < atoi(argv[i]); j++) {
-                if (i == 2) {
-                    cout << "Please insert warrior number " << j + 1 << " name:" << endl;
-                    try {
-                        userName = getNameFromUser();
-                        Hero *war = new Warrior(userName);
-                        Hero::allHeros[war->getName()] = war;
-                    }
-                    catch (HeroesException &e) {
-                        e.Handle();
-                        j--;
-                    }
-                } else if (i == 3) {
-                    cout << "Please insert thief number " << j + 1 << " name:" << endl;
-                    try {
-                        userName = getNameFromUser();
-                        Hero *thief = new Thief(userName);
-                        Hero::allHeros[thief->getName()] = thief;
-                    }
-                    catch (HeroesException &e) {
-                        e.Handle();
-                        j--;
-                    }
-                } else if (i == 4) {
-                    cout << "Please insert necromancer number " << j + 1 << " name:" << endl;
-                    try {
-                        userName = getNameFromUser();
-                        Hero *necromancer = new Necromancer(userName);
-                        Hero::allHeros[necromancer->getName()] = necromancer;
-                    }
-                    catch (HeroesException &e) {
-                        e.Handle();
-                        j--;
-                    }
-                }
-            }
-        }
+       /************** Close Program if Args are not Valid **************/
+       string warriorNum = argv[2];
+       string thiefNum = argv[3];
+       string necroNum = argv[4];
+       if(!(warriorNum == "1" || warriorNum == "2" || warriorNum == "3" ) || !( thiefNum ==  "1"  ||  thiefNum ==  "2" || thiefNum ==  "3" ) || !( necroNum == "2" || necroNum == "1" || necroNum == "3"))
+         {
+            return 0;
+         }
+
+         /*********************************************************************/
+         numOfPlayers = stoi(warriorNum) + stoi(thiefNum) + stoi(necroNum);
+         randomTurns = new Hero *[numOfPlayers];
+         for (int i = 0; i < numOfPlayers; ++i)
+           {
+             randomTurns[i] = NULL;
+           }
+         string userName = "";
+         for (int i = 2; i < argc; i++)
+           {
+             for (int j = 0; j < atoi (argv[i]); j++)
+               {
+                 if (i == 2)
+                   {
+                     cout << "Please insert warrior number " << j + 1 << " name:" << endl;
+                     try
+                       {
+                         userName = getNameFromUser ();
+                         Hero *war = new Warrior (userName);
+                         Hero::allHeros[war->getName ()] = war;
+                       }
+                     catch (HeroesException &e)
+                       {
+                         e.Handle ();
+                         j--;
+                       }
+                   }
+                 else if (i == 3)
+                   {
+                     cout << "Please insert thief number " << j + 1 << " name:" << endl;
+                     try
+                       {
+                         userName = getNameFromUser ();
+                         Hero *thief = new Thief (userName);
+                         Hero::allHeros[thief->getName ()] = thief;
+                       }
+                     catch (HeroesException &e)
+                       {
+                         e.Handle ();
+                         j--;
+                       }
+                   }
+                 else if (i == 4)
+                   {
+                     cout << "Please insert necromancer number " << j + 1 << " name:" << endl;
+                     try
+                       {
+                         userName = getNameFromUser ();
+                         Hero *necromancer = new Necromancer (userName);
+                         Hero::allHeros[necromancer->getName ()] = necromancer;
+                       }
+                     catch (HeroesException &e)
+                       {
+                         e.Handle ();
+                         j--;
+                       }
+                   }
+               }
+           }
 
 /**
  * create random array of players' turns
  */
-        map<string, Hero *>::iterator it1;
-        it1 = Hero::allHeros.begin();
-        while (insertedPlayers < numOfPlayers && it1 != Hero::allHeros.end()) {
-            playerTurnNum = rand() % numOfPlayers;
-            if (randomTurns[playerTurnNum] == NULL) {
+         map<string, Hero *>::iterator it1;
+         it1 = Hero::allHeros.begin ();
+         while (insertedPlayers < numOfPlayers && it1 != Hero::allHeros.end ())
+           {
+             playerTurnNum = rand () % numOfPlayers;
+             if (randomTurns[playerTurnNum] == NULL)
+               {
 //            cout << it1->first << endl;
-                randomTurns[playerTurnNum] = &it1->second->getHero();
+                 randomTurns[playerTurnNum] = &it1->second->getHero ();
 //            cout << randomTurns[playerTurnNum]->getName() << endl;
-                it1++;
-                insertedPlayers++;
-            }
-        }
-    } else {
-       *randomTurns = createLastGame("test1.txt");
+                 it1++;
+                 insertedPlayers++;
+               }
+           }
+
     }
+    else {
+       createLastGame("test2.txt");
+       if(randomTurns == NULL)
+         {
+           return 0;
+         }
+    }
+
+
+ /********************* Delete Last Game Files ***********************/
+  string rmCommand = "rm -rf ";
+  gameFolder = "./game";
+  heroesFolder = "./Heroes";
+  rmCommand = rmCommand + gameFolder + " " + heroesFolder;
+  system(rmCommand.c_str ());
+  /********************************************************************/
+
+
 //TODO: Change rand() to random() as in the /**/
 /*
   long rndom;
@@ -149,13 +200,15 @@ int main(int argc, char *argv[]) {
       switch (choiceNum) {
           case 1:
             cout << "1. Show me my opponents\n";
-            cout << "2. Attack hero\n";
+            cout << "2.Attack hero\n";
             cin >> attackMenu;
           switch (attackMenu) {
               case 1:
                 showAllHeros(randomTurns[playerTurnNum]->getHero());
-                cin.get();
-                cin.get();
+//                cin.get();
+//                cin.get();
+                cin.ignore ();
+                getline(cin, stam);
               break;
               case 2:
                 try
@@ -171,7 +224,7 @@ int main(int argc, char *argv[]) {
                       }
                     else
                       {
-                          throw MustWaitThreeTurns();
+                          cout << "Cannot Attack before Everyone played 3 Turns" << endl;
                       }
                   }
                   catch (HeroesException& e)
@@ -224,7 +277,23 @@ int main(int argc, char *argv[]) {
           case 7:
               //Delete map
               randomTurns[playerTurnNum]->deleteDataFromMap();
-              writeTheLastGame(playerTurnNum,numOfPlayers,randomTurns);
+              gameFolder = "./game";
+              if(!myCreateFolder (gameFolder))
+                {
+    //                  exit(0);
+                }
+              heroesFolder = "./Heroes";
+              heroNameFolder = "";
+              if(myCreateFolder (heroesFolder))
+                {
+                  for (int i = 0; i < numOfPlayers; ++i)
+                    {
+                      heroNameFolder = heroesFolder + "/" + randomTurns[i]->getName ();
+                      myCreateFolder (heroNameFolder);
+                    }
+
+                }
+              writeTheLastGame(playerTurnNum,randomTurns,gameFolder,heroesFolder);
             exit(0);
           default:
             cout << ("please choose a valid number\n");
@@ -322,12 +391,12 @@ void showAllHeros(Hero& h1)
  *
  *
  */
-void CreateFolder ()
+bool myCreateFolder (string& folderPath)
 {
   int check;
-  char *dirName;
+  const char *dirName;
 
- // dirName = "./GamePlay";
+  dirName = folderPath.c_str ();
   if (stat (dirName, &info) != 0)
     {
       // Folder does not exists
@@ -335,12 +404,13 @@ void CreateFolder ()
       if (-1 == check)
         {
           // Could not create the folder
+          return false;
         }
       else
         {
           // Created the new Folder
           // Create the Files of the Useres Now
-          cout << exec ("pwd") << endl;
+          return true;
         }
 
     }
@@ -348,12 +418,12 @@ void CreateFolder ()
     {
       // it is a directory and it is already created
       // Create the Files of the Users Now
-      cout << exec ("pwd") << endl;
+      return true;
     }
   else
     {
       // Not A directory and cannot run the Program
-      exit(1);
+      return false;
     }
 }
 
@@ -375,27 +445,77 @@ std::string exec (const char *cmd)
   return result;
 }
 
-void writeTheLastGame(int indexOfPlayer,int numOfPlayers, Hero **randomArray){
-    std::ofstream outfile ("test2.txt");
+void writeTheLastGame(int indexOfPlayer,Hero **randomArray, string& gameFolder, string& heroFolder){
+    std::ofstream outfile (gameFolder + "/game.txt");
     outfile << numOfPlayers << endl;
     outfile << indexOfPlayer << endl;
-    for(int i = 0; i < numOfPlayers; i++){
-        outfile << randomArray[i]->getHero().detailsForGame() + "\n";
+    outfile << deadCounter << endl;
+    outfile << tookMyMoney << endl;
+    outfile << specailTurn << endl;
+    outfile << threefirstgames << endl;
+    for (int j = 0; j < numOfPlayers; ++j)
+    {
+      outfile << randomArray[j]->getHero().detailsForGame() + "\n";
     }
-    outfile.close();
+    outfile.close ();
+
+    for(int i = 0; i < numOfPlayers; i++){
+        outfile.open (heroFolder + "/" + randomArray[i]->getName () + "/" + randomArray[i]->getName ());
+        outfile << randomArray[i]->getHero().detailsForGame() + "\n";
+        outfile.close ();
+    }
+//    outfile.close();
 }
-Hero* createLastGame(string fileName){
+void createLastGame(string fileName){
     string line;
     ifstream myfile (fileName);
+
     if (myfile.is_open())
     {
         int index = 0;
         string name;
+        //get NumOfPlayers
         getline(myfile,line);
-        int numOfPlayers = stoi(line);
-        Hero* currentRandom[numOfPlayers];
+        numOfPlayers = stoi(line);
+        //get Index of the current Player Turn
         getline (myfile,line);
         playerTurnNum = stoi(line);// line with the index of turn
+        //get the dead counter
+        getline (myfile,line);
+        deadCounter = stoi(line);
+        if(deadCounter == numOfPlayers - 1)
+          {
+            return;
+          }
+        randomTurns = new Hero*[numOfPlayers];
+
+        int moneyTurn;
+        getline (myfile,line);
+        moneyTurn = stoi(line);
+        if(moneyTurn == 0)
+          {
+            tookMyMoney = false;
+          }
+          else if(moneyTurn == 1)
+          {
+            tookMyMoney = true;
+          }
+
+        int specialMyTurn;
+        getline (myfile,line);
+        specialMyTurn = stoi(line);
+        if(specialMyTurn == 0)
+          {
+            specailTurn = false;
+          }
+        else if(specialMyTurn == 1)
+          {
+            specailTurn = true;
+          }
+
+        getline (myfile,line);
+        threefirstgames = stoi(line);
+
         while(index < numOfPlayers){
         while ( getline (myfile,line) ) {
             string arr[13];
@@ -411,24 +531,24 @@ Hero* createLastGame(string fileName){
                 Hero* current;
                 Hero *war = new Warrior(arr[1]);
                 Hero::allHeros[arr[1]] = war;
-                currentRandom[index] = war;
+                randomTurns[index] = war;
                 }
                 if (arr[0] == "Thief") {
                     Hero *thi = new Thief(arr[1]);
                     Hero::allHeros[arr[1]] = thi;
-                    currentRandom[index] = thi;
+                    randomTurns[index] = thi;
 
                 }
                 if (arr[0] == "Necromancer") {
                     Hero *nec = new Necromancer(arr[1]);
                     Hero::allHeros[arr[1]] = nec;
-                    currentRandom[index] = nec;
+                    randomTurns[index] = nec;
                 }
-            currentRandom[index]->goldQty = stoi(arr[2]);
+            randomTurns[index]->goldQty = stoi(arr[2]);
             int k = 0;
                 for(int j = 3; j < 13; j=j+2) {
                      if(k < 5) {
-                        currentRandom[index]->creatureList[k].numOfCreature = stoi(arr[j]);
+                         randomTurns[index]->creatureList[k].numOfCreature = stoi(arr[j]);
                          k++;
                     }
                 }
@@ -436,10 +556,15 @@ Hero* createLastGame(string fileName){
             }
         }
         myfile.close();
-        return *currentRandom;
+        cout << "Fuckkkkk" <<endl;
+//        return *currentRandom;
     }
 
-    else cout << "Unable to open file";
+    else
+      {
+        cout << "Unable to open file";
+//        return NULL;
+      }
 }
 
 
