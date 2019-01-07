@@ -23,9 +23,10 @@ public:
 
 //public:
     Hero();
+    Hero(char*);
     ~Hero();
 
-
+    void deleteDataFromMap();
     virtual string getType() const=0;
     void heroDetails();
     bool legalName(char* name);

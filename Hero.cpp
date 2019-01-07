@@ -17,12 +17,13 @@ CreatureData :: CreatureData(Creature* cr,string name, int num)
 }
 
 CreatureData :: ~CreatureData() {}
+
 /////////////////////////////////////////////////////////////////
 
 Hero :: Hero(){
     char* name = new char[31];
     heroName = new char[31];
-
+   // cout << "for tetst\n";
     cin >> name;
     int length = strlen(name);
     if(length >31){
@@ -253,6 +254,14 @@ Hero* Hero::searchHeroByName(const string heroByName)const
     }
 }
 
+void Hero :: deleteDataFromMap() {
+    map<string, Hero *>::iterator it1;
+    it1 = Hero::allHeros.begin();
+    while (it1 != Hero::allHeros.end()) {
+        Hero::allHeros.erase(it1);
+        it1++;
+    }
+}
 /**
  * Iterates over the Heroes map and prints them all
  */
