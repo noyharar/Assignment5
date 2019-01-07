@@ -14,7 +14,7 @@ class CreatureData;
 
 class Hero{
 public:
-    char *heroName;
+    string heroName;
     int goldQty;//between 0-2500
     CreatureData* creatureList;
     string type;
@@ -23,13 +23,12 @@ public:
 
 //public:
     Hero();
-    Hero(char*);
+    Hero(string&);
     ~Hero();
 
     void deleteDataFromMap();
     virtual string getType() const=0;
     void heroDetails();
-    bool legalName(char* name);
     int getGold()const;
     void increaseGold(int amount);
     void decreaseGold(int amount);
@@ -40,13 +39,10 @@ public:
     void printNameType()const;
     int indexInList(string);
     string detailsForGame();
-
-
-
-        Hero* searchHeroByName(const string heroByName)const;
+    Hero* searchHeroByName(const string heroByName)const;
     void buyCreatures();
     void helpToBuy(int index);
-    char* getName()const;
+    string getName()const;
     void printCreatures()const;
     bool attackOpponent();
 //    virtual void attackOpponent(/*Hero h1*/)=0;//How do i get a Hero Type variable

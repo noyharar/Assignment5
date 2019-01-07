@@ -6,7 +6,7 @@
 #include "Zombie.h"
 
 
-Necromancer::Necromancer():Hero()
+Necromancer::Necromancer(string iHeroName):Hero(iHeroName)
 {
     type = getType();
 }
@@ -23,14 +23,6 @@ Necromancer::~Necromancer(){}
 string Necromancer::getType() const
 {
     return "Necromancer";
-}
-
-char *Necromancer::getName() const
-{
-    char *tempName = NULL;
-    tempName = new char[strlen(heroName)];
-    strcpy(tempName,heroName);
-    return tempName;
 }
 
 

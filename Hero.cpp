@@ -21,26 +21,7 @@ CreatureData :: ~CreatureData() {}
 /////////////////////////////////////////////////////////////////
 
 Hero :: Hero(){
-    char* name = new char[31];
-    heroName = new char[31];
-   // cout << "for tetst\n";
-    cin >> name;
-    int length = strlen(name);
-    if(length >31){
-        throw IncorrectUsername(name);
-    }
-    for(int i = 0; i < strlen(name); i++){
-        if(!isalpha(name[i]) && !isdigit((int)name[i])){
-            throw IncorrectUsername(name);
-        }
-    }
-//    while(!legalName(name))
-//    {
-//        cout << "Please enter a username:\n";
-//        cin >> name;
-//    }
-    strcpy(heroName,name);
-    delete[] name;
+
     goldQty = 750;
 
     Zombie* zombie = new Zombie();
@@ -64,28 +45,35 @@ Hero :: Hero(){
     creatureList[4] = cr4;
 }
 
+Hero::Hero(string &name)
+{
+    heroName = name;
+    goldQty = 750;
+
+    Zombie* zombie = new Zombie();
+    Wizard* wizard = new Wizard();
+    Vampire* vampire = new Vampire();
+    Archer* archer = new Archer();
+    Black_Dragon* bDrag = new Black_Dragon();
+
+    CreatureData cr0 = CreatureData(bDrag,"Black_Dragon",0);
+    CreatureData cr1 = CreatureData(wizard,"Wizard",0);
+    CreatureData cr2 = CreatureData(archer,"Archer",0);
+    CreatureData cr3 = CreatureData(vampire,"Vampire",0);
+    CreatureData cr4 = CreatureData(zombie,"Zombie",0);
+
+    creatureList  = new CreatureData[5] ;
+
+    creatureList[0] = cr0;
+    creatureList[1] = cr1;
+    creatureList[2] = cr2;
+    creatureList[3] = cr3;
+    creatureList[4] = cr4;
+
+}
 Hero ::~Hero() {}
 
 
-/*
- * need to change this function with errors
- */
-bool Hero :: legalName(char* name){
-
-    int length = strlen(name);
-    if(length >31){
-        cout << "illgal name - error exception\n";
-        return false;
-    }
-    for(int i = 0; i < strlen(name); i++){
-        if(!isalpha(name[i]) && !isdigit((int)name[i])){
-            cout << "illgal name - error exception\n";
-            return false;
-        }
-    }
-    return true;
-
-};
 
 int Hero::getGold() const
 {
@@ -146,12 +134,9 @@ string Hero::getTypeForPrint() const
 
 /// Gets the name of the hero
 /// \return char* as the name of the hero
-char* Hero::getName() const
+string Hero::getName() const
 {
-    char *tempName = NULL;
-    tempName = new char[strlen(heroName)];
-    strcpy(tempName,heroName);
-    return tempName;
+    return heroName;
 }
 
 /// Decreases the number of gold of the Hero by amount

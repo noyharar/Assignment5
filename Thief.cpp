@@ -1,8 +1,7 @@
 #include "Thief.h"
 
-Thief:: Thief():Hero()
+Thief:: Thief(string iHeroName):Hero(iHeroName)
 {
-
     type = getType();
 }
 //
