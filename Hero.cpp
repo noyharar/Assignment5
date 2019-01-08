@@ -279,6 +279,10 @@ void Hero::printNameType()const
 {
     cout << getName() << " " << getType() << endl;
 }
+void Hero::printNameType1()const
+{
+    cout << getName() << " " << getType();
+}
 
 bool Hero::attackOpponent()
 {
@@ -287,7 +291,7 @@ bool Hero::attackOpponent()
     string  Op_Creature;
     Hero* AttackedOp = NULL, *currentAttacker = this, *currentDefender = NULL;
     //check if the attacked name is available in the users names
-    cout << "Please insert your opponent name:" << endl;
+    cout << "Please insert your opponent name:";
     string getHeroName;
     cin >> getHeroName;
     currentDefender = searchHeroByName(getHeroName);

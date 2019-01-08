@@ -37,6 +37,7 @@ public:
     bool ifDie();
     bool isAvailableCreacure(string);
     void printNameType()const;
+    void printNameType1()const;
     int indexInList(string);
     string detailsForGame();
     Hero* searchHeroByName(const string heroByName)const;

@@ -230,7 +230,7 @@ int main(int argc, char *argv[]) {
                     {
                       e.Handle ();
                     }
-              break;
+                break;
               default:
                 cout << "please choose a valid number\n";
             }
@@ -241,7 +241,7 @@ int main(int argc, char *argv[]) {
                 randomTurns[playerTurnNum]->increaseGold(100);
                 tookMyMoney = true;
               }
-          break;
+            break;
           case 3:
             try{
               randomTurns[playerTurnNum]->buyCreatures();
@@ -249,39 +249,32 @@ int main(int argc, char *argv[]) {
             catch (HeroesException& e){
               e.Handle ();
             }
-          break;
+            break;
           case 4:
             randomTurns[playerTurnNum]->heroDetails();
-          break;
+            break;
           case 5:
             if(!specailTurn)
               {
-//                    try{
-//
-//                    }
-//                    catch exception as e
-//                    {
-//
-//                    }
                 randomTurns[playerTurnNum]->specialSkill();
                 specailTurn = true;
               }
-            else
-              {
-                cout << "You cannot use your special skill twice" << endl;
-              }
-          break;
+//            else
+//              {
+//                cout << "You cannot use your special skill twice" << endl;
+//              }
+              break;
 
           case 6:
               playerTurnNum = nextTurn(playerTurnNum,numOfPlayers);
-          break;
+              break;
 
           case 7:
               //Delete map
 //              randomTurns[playerTurnNum]->deleteDataFromMap();
-              Hero::allHeros.clear ();
+//              Hero::allHeros.clear ();
               exitGame ();
-              exit(0);
+              return 0;
           default:
             cout << ("please choose a valid number\n");
         }
@@ -383,11 +376,70 @@ void showAllHeros(Hero& h1)
 
   map<string,Hero*>::iterator it1;
   it1 = Hero::allHeros.begin();
+  string heroNames = "";
+  string lastName = "",typePlayer = "";
+  bool foundLastPlayer = false;
+
+  while (it1 != Hero::allHeros.end ())
+    {
+      if (!(h1.getName () == it1->first) && it1->second->getType () == "Necromancer")
+        {
+          if (!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
+            {
+              lastName = it1->second->getName ();
+              typePlayer = it1->second->getType ();
+              foundLastPlayer = true;
+//              cout << endl;
+              break;
+            }
+        }
+        it1++;
+      }
+  it1 = Hero::allHeros.begin();
+  if(!foundLastPlayer)
+    {
+      while (it1 != Hero::allHeros.end ())
+        {
+          if (!(h1.getName () == it1->first) && it1->second->getType () == "Thief")
+            {
+              if (!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
+                {
+                  lastName = it1->second->getName ();
+                  typePlayer = it1->second->getType ();
+                  foundLastPlayer = true;
+  //              cout << endl;
+                  break;
+                }
+            }
+            it1++;
+        }
+    }
+  it1 = Hero::allHeros.begin();
+  if(!foundLastPlayer){
+    while (it1 != Hero::allHeros.end ())
+      {
+        if (!(h1.getName () == it1->first) && it1->second->getType () == "Warrior")
+          {
+            if (!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
+              {
+                lastName = it1->second->getName ();
+                typePlayer = it1->second->getType ();
+                foundLastPlayer = true;
+  //              cout << endl;
+                break;
+              }
+          }
+          it1++;
+      }
+  }
+
+  it1 = Hero::allHeros.begin();
+  /**************** Print All Players *********************/
   while (it1 != Hero::allHeros.end() )
     {
       if(!(h1.getName() == it1->first)&& it1->second->getType() == "Warrior")
         {
-          if(!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
+          if((!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers )&& !(it1->second->getName () == lastName))
             {
               it1->second->printNameType();
 //              cout << endl;
@@ -400,7 +452,7 @@ void showAllHeros(Hero& h1)
     {
       if(!(h1.getName() == it1->first)&& it1->second->getType() == "Thief")
         {
-          if(!it1->second->ifDie () || threefirstgames < 3*numOfPlayers)
+          if((!it1->second->ifDie () || threefirstgames < 3*numOfPlayers) && !(it1->second->getName () == lastName))
             {
 //              cout << endl;
               it1->second->printNameType();
@@ -413,7 +465,7 @@ void showAllHeros(Hero& h1)
     {
       if(!(h1.getName() == it1->first)&& it1->second->getType() == "Necromancer")
         {
-          if(!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
+          if((!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers) && !(it1->second->getName () == lastName))
             {
 //              cout << endl;
               it1->second->printNameType();
@@ -421,6 +473,9 @@ void showAllHeros(Hero& h1)
         }
       it1++;
     }
+    cout.flush ();
+
+    cout << lastName << " " << typePlayer;
 }
 
 //TODO: Maybe we should Recursivly create the folder inside GamePlay
