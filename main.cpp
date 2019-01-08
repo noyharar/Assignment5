@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 
 
 
-    if(argc > 2) {
+    if(argc == 5) {
         /**
        *receive num of heroes and create them
        */
@@ -151,13 +151,17 @@ int main(int argc, char *argv[]) {
            }
 
     }
-    else {
+    else if(argc == 2){
        createLastGame("game/game.txt");
        if(randomTurns == NULL)
          {
            return 0;
          }
     }
+    else
+      {
+        return 0;
+      }
 
 
  /********************* Delete Last Game Files ***********************/
