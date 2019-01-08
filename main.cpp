@@ -28,7 +28,7 @@ bool myCreateFolder (string&);
 void showAllHeros(Hero& h1);
 string getNameFromUser();
 int nextTurn(int, int);
-
+void exitGame();
 void writeTheLastGame(int, Hero**, string&, string&);
 
 void createLastGame(string);
@@ -220,7 +220,6 @@ int main(int argc, char *argv[]) {
 
                           }
                         deadCounter++;
-                        threefirstgames++;
                       }
                     else
                       {
@@ -275,37 +274,14 @@ int main(int argc, char *argv[]) {
 
           case 6:
               playerTurnNum = nextTurn(playerTurnNum,numOfPlayers);
-              threefirstgames++;
           break;
 
           case 7:
               //Delete map
 //              randomTurns[playerTurnNum]->deleteDataFromMap();
               Hero::allHeros.clear ();
-              gameFolder = "./game";
-              if(!myCreateFolder (gameFolder))
-                {
-    //                  exit(0);
-                }
-              heroesFolder = "./Heroes";
-              heroNameFolder = "";
-              if(myCreateFolder (heroesFolder))
-                {
-                  for (int i = 0; i < numOfPlayers; ++i)
-                    {
-                      heroNameFolder = heroesFolder + "/" + randomTurns[i]->getName ();
-                      myCreateFolder (heroNameFolder);
-                    }
-
-                }
-              writeTheLastGame(playerTurnNum,randomTurns,gameFolder,heroesFolder);
-//          randomTurns[playerTurnNum]->deleteDataFromMap();
-          for (int j = 0; j < numOfPlayers; ++j)
-            {
-              delete randomTurns[j];
-            }
-            delete[]randomTurns;
-            exit(0);
+              exitGame ();
+              exit(0);
           default:
             cout << ("please choose a valid number\n");
         }
@@ -318,35 +294,41 @@ int main(int argc, char *argv[]) {
         }
     }
     cout << "The winner is " << randomTurns[playerTurnNum]->getName() << endl;
-
+    exitGame ();
 //    randomTurns[playerTurnNum]->deleteDataFromMap();
-    gameFolder = "./game";
-    if(!myCreateFolder (gameFolder))
-      {
-        //                  exit(0);
-      }
-    heroesFolder = "./Heroes";
-    heroNameFolder = "";
-    if(myCreateFolder (heroesFolder))
-      {
-        for (int i = 0; i < numOfPlayers; ++i)
-          {
-            heroNameFolder = heroesFolder + "/" + randomTurns[i]->getName ();
-            myCreateFolder (heroNameFolder);
-          }
 
-      }
-    writeTheLastGame(playerTurnNum,randomTurns,gameFolder,heroesFolder);
-//    randomTurns[playerTurnNum]->deleteDataFromMap();
-    for (int j = 0; j < numOfPlayers; ++j)
-      {
-        delete randomTurns[j];
-      }
-    delete[]randomTurns;
 
 
   int x; // for BreakPoint
   return 0;
+}
+
+void exitGame()
+{
+  string gameFolder, heroesFolder,heroNameFolder;
+  gameFolder = "./game";
+  if(!myCreateFolder (gameFolder))
+    {
+      //                  exit(0);
+    }
+  heroesFolder = "./Heroes";
+  heroNameFolder = "";
+  if(myCreateFolder (heroesFolder))
+    {
+      for (int i = 0; i < numOfPlayers; ++i)
+        {
+          heroNameFolder = heroesFolder + "/" + randomTurns[i]->getName ();
+          myCreateFolder (heroNameFolder);
+        }
+
+    }
+  writeTheLastGame(playerTurnNum,randomTurns,gameFolder,heroesFolder);
+//    randomTurns[playerTurnNum]->deleteDataFromMap();
+  for (int j = 0; j < numOfPlayers; ++j)
+    {
+      delete randomTurns[j];
+    }
+  delete[]randomTurns;
 }
 
 int nextTurn(int playerTurnNum, int numOfPlayers){
