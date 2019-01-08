@@ -6,7 +6,7 @@
 #include "Zombie.h"
 
 
-Necromancer::Necromancer(string iHeroName):Hero(iHeroName)
+Necromancer::Necromancer(string& iHeroName):Hero(iHeroName)
 {
     type = getType();
 }

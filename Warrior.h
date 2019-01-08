@@ -7,7 +7,7 @@ class Warrior : public Hero{
 private:
 
 public:
-    Warrior(string);
+    Warrior(string&);
     ~Warrior();
     string getType()const;
 //    void attackOpponent(/*Hero h1*/)override;//How do i get a Hero Type variable

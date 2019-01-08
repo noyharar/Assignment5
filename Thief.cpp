@@ -1,7 +1,7 @@
 #include <limits>
 #include "Thief.h"
 
-Thief:: Thief(string iHeroName):Hero(iHeroName)
+Thief:: Thief(string& iHeroName):Hero(iHeroName)
 {
     type = getType();
 }

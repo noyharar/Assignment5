@@ -2,7 +2,7 @@
 
 
 
-Warrior::Warrior(string iheroName):Hero(iheroName)
+Warrior::Warrior(string& iheroName):Hero(iheroName)
 {
     type = getType();
 }

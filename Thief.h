@@ -8,7 +8,7 @@ class Thief : public Hero{
  private:
   void specialSkilled(Hero& h1);
  public:
-    Thief(string);
+    Thief(string&);
   //  Thief(char* heroName);
     ~Thief();
     string getType()const override;

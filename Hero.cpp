@@ -16,7 +16,9 @@ CreatureData :: CreatureData(Creature* cr,string name, int num)
     numOfCreature = num;
 }
 
-CreatureData :: ~CreatureData() {}
+CreatureData :: ~CreatureData() {
+
+}
 
 /////////////////////////////////////////////////////////////////
 
@@ -71,7 +73,13 @@ Hero::Hero(string &name)
     creatureList[4] = cr4;
 
 }
-Hero ::~Hero() {}
+Hero ::~Hero() {
+  for (int i = 0; i < 5 ; ++i)
+    {
+      delete creatureList[i].creature;
+    }
+    delete[]creatureList;
+}
 
 
 

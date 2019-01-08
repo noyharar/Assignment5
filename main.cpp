@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
                      try
                        {
                          userName = getNameFromUser ();
-                         Hero *war = new Warrior (userName);
+                         Hero *war = new Warrior(userName);
                          Hero::allHeros[war->getName ()] = war;
                        }
                      catch (HeroesException &e)
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
                      try
                        {
                          userName = getNameFromUser ();
-                         Hero *thief = new Thief (userName);
+                         Hero *thief = new Thief(userName);
                          Hero::allHeros[thief->getName ()] = thief;
                        }
                      catch (HeroesException &e)
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
                      try
                        {
                          userName = getNameFromUser ();
-                         Hero *necromancer = new Necromancer (userName);
+                         Hero *necromancer = new Necromancer(userName);
                          Hero::allHeros[necromancer->getName ()] = necromancer;
                        }
                      catch (HeroesException &e)
@@ -200,7 +200,7 @@ int main(int argc, char *argv[]) {
       switch (choiceNum) {
           case 1:
             cout << "1. Show me my opponents\n";
-            cout << "2.Attack hero\n";
+            cout << "2. Attack hero\n";
             cin >> attackMenu;
           switch (attackMenu) {
               case 1:
@@ -281,6 +281,7 @@ int main(int argc, char *argv[]) {
           case 7:
               //Delete map
 //              randomTurns[playerTurnNum]->deleteDataFromMap();
+              Hero::allHeros.clear ();
               gameFolder = "./game";
               if(!myCreateFolder (gameFolder))
                 {
@@ -298,9 +299,22 @@ int main(int argc, char *argv[]) {
 
                 }
               writeTheLastGame(playerTurnNum,randomTurns,gameFolder,heroesFolder);
+//          randomTurns[playerTurnNum]->deleteDataFromMap();
+          for (int j = 0; j < numOfPlayers; ++j)
+            {
+              delete randomTurns[j];
+            }
+            delete[]randomTurns;
             exit(0);
           default:
             cout << ("please choose a valid number\n");
+        }
+    }
+  for (int k = 0; k < numOfPlayers; ++k)
+    {
+      if(!randomTurns[k]->ifDie ())
+        {
+          playerTurnNum = k;
         }
     }
     cout << "The winner is " << randomTurns[playerTurnNum]->getName() << endl;
@@ -323,6 +337,12 @@ int main(int argc, char *argv[]) {
 
       }
     writeTheLastGame(playerTurnNum,randomTurns,gameFolder,heroesFolder);
+//    randomTurns[playerTurnNum]->deleteDataFromMap();
+    for (int j = 0; j < numOfPlayers; ++j)
+      {
+        delete randomTurns[j];
+      }
+    delete[]randomTurns;
 
 
   int x; // for BreakPoint
@@ -388,6 +408,7 @@ void showAllHeros(Hero& h1)
           if(!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
             {
               it1->second->printNameType();
+//              cout << endl;
             }
         }
       it1++;
@@ -399,8 +420,10 @@ void showAllHeros(Hero& h1)
         {
           if(!it1->second->ifDie () || threefirstgames < 3*numOfPlayers)
             {
+//              cout << endl;
               it1->second->printNameType();
-            }        }
+            }
+        }
       it1++;
     }
   it1 = Hero::allHeros.begin();
@@ -410,8 +433,10 @@ void showAllHeros(Hero& h1)
         {
           if(!it1->second->ifDie () || threefirstgames < 3 * numOfPlayers)
             {
+//              cout << endl;
               it1->second->printNameType();
-            }        }
+            }
+        }
       it1++;
     }
 }

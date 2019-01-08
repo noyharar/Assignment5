@@ -1,6 +1,4 @@
-//
-// Created by gal on 1/3/19.
-//
+
 
 #ifndef ASSIGNMENT5_HEROESEXCEPTION_H
 #define ASSIGNMENT5_HEROESEXCEPTION_H

@@ -7,7 +7,7 @@
 class Necromancer : public Hero{
 
 public:
-    Necromancer(string);
+    Necromancer(string&);
   //  Necromancer(char* heroName);
     ~Necromancer();
     string getType()const;
