@@ -4,15 +4,15 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <random>
-
-#include "Creature.h"
-#include "Zombie.h"
-#include "Wizard.h"
+//
+//#include "Creature.h"
+//#include "Zombie.h"
+//#include "Wizard.h"
+//#include "Black_Dragon.h"
 #include "Hero.h"
 #include "Warrior.h"
 #include "Thief.h"
 #include "Necromancer.h"
-#include "Black_Dragon.h"
 #include "HeroesException.h"
 #include <fstream>
 #include <sstream>
@@ -32,6 +32,7 @@ void exitGame();
 void writeTheLastGame(int, Hero**, string&, string&);
 
 void createLastGame(string);
+void updateHowManyDeadAfterThree();
 
 bool tookMyMoney = false, specailTurn = false;
 int threefirstgames = 0;
@@ -67,7 +68,7 @@ int main(int argc, char *argv[]) {
        string warriorNum = argv[2];
        string thiefNum = argv[3];
        string necroNum = argv[4];
-       if(!(warriorNum == "1" || warriorNum == "2" || warriorNum == "3" ) || !( thiefNum ==  "1"  ||  thiefNum ==  "2" || thiefNum ==  "3" ) || !( necroNum == "2" || necroNum == "1" || necroNum == "3"))
+       if(!(warriorNum == "0" || warriorNum == "1" || warriorNum == "2" || warriorNum == "3" ) || !(thiefNum == "0" || thiefNum ==  "1"  ||  thiefNum ==  "2" || thiefNum ==  "3" ) || !(necroNum == "0" || necroNum == "2" || necroNum == "1" || necroNum == "3"))
          {
             return 0;
          }
@@ -184,9 +185,13 @@ int main(int argc, char *argv[]) {
     */
   while (deadCounter < numOfPlayers-1) {
       //check if the player already died and jump to the next
-          if (randomTurns[playerTurnNum]->getHero().ifDie() && threefirstgames > 3*numOfPlayers) { //&& deadCounter >= numOfPlayers -1) {
+          while (randomTurns[playerTurnNum]->getHero().ifDie() && threefirstgames > 3*numOfPlayers) { //&& deadCounter >= numOfPlayers -1) {
               playerTurnNum = nextTurn(playerTurnNum, numOfPlayers);
           }
+      if(threefirstgames > 3*numOfPlayers)
+        {
+          updateHowManyDeadAfterThree ();
+        }
       string currentPlayerName = randomTurns[playerTurnNum]->getName();
       cout << "Welcome " << currentPlayerName << endl;
       // print menu
@@ -223,7 +228,7 @@ int main(int argc, char *argv[]) {
                             playerTurnNum = nextTurn (playerTurnNum, numOfPlayers);
 
                           }
-                        deadCounter++;
+                        updateHowManyDeadAfterThree ();
                       }
                     else
                       {
@@ -298,6 +303,19 @@ int main(int argc, char *argv[]) {
 
   int x; // for BreakPoint
   return 0;
+}
+
+void updateHowManyDeadAfterThree(){
+      int i = 0;
+      int newDeads = 0;
+      while(i < numOfPlayers){
+          if(randomTurns[i]->ifDie ()){
+              newDeads++;
+            }
+            i++;
+        }
+
+        deadCounter = newDeads;
 }
 
 void exitGame()
